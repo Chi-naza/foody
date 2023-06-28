@@ -5,4 +5,16 @@ class FoodyImages {
   static const String manIntro = "assets/images/man_into.png";
   static const String personsNshoppingCart = "assets/images/persons_n_shopping_cart.png";
   static const String google_icon = "assets/images/google_icon.png";
+
+  // Category List Images
+  static const String bakedMuffin = "assets/images/bakedmuffin.png";
+  static const String juicyFruit = "assets/images/juicy.png";
+  static const String milkBox = "assets/images/milkbox.png";
+  static const String spinach = "assets/images/spinach.png";
+
+  static const String carrotPic = "assets/images/carrotpic.png"; 
+  static const String plusIcon = "assets/images/plus-icon.png";
+  static const String carouselImage = "assets/images/carousel.png";
+  static const String speedDialImage = "assets/images/speeddial.jpg";
+  static const String carrotDetailImage = "assets/images/carrot-detail.jpg";
 }

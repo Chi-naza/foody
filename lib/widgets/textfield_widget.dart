@@ -27,7 +27,7 @@ class TextFieldWidget extends StatelessWidget {
               fontSize:  18,
               fontWeight:  FontWeight.w700,
               height:  1.2125,
-              color:  const Color(0xff333333),
+              color:  FoodyColors.textFoodyblack,
             ),
           ),
         ),

@@ -3,8 +3,11 @@ import 'package:foody/constants/foody_images.dart';
 
 class HeaderBackgroundWidget extends StatelessWidget {
   final Widget children;
+  final double? heightFromTop;
+  final double? heightBtwTextnChildren;
+  final double? foodyTextFontSize;
   
-  const HeaderBackgroundWidget({super.key, required this.children});
+  const HeaderBackgroundWidget({super.key, required this.children, this.heightFromTop, this.heightBtwTextnChildren, this.foodyTextFontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class HeaderBackgroundWidget extends StatelessWidget {
         Positioned(
           child: Column(
             children: [
-              SizedBox(height: 80),
+              SizedBox(height: heightFromTop??80),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -32,7 +35,7 @@ class HeaderBackgroundWidget extends StatelessWidget {
                     "Foody",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 40,
+                      fontSize: foodyTextFontSize?? 40,
                       color: Colors.white
                     ),
                   ),
@@ -41,7 +44,7 @@ class HeaderBackgroundWidget extends StatelessWidget {
                   Image.asset(FoodyImages.carrot),
                 ],
               ),
-              SizedBox(height: 50),
+              SizedBox(height: heightBtwTextnChildren??50),
               // Children widget here
               children,
               // Extra space at screen end

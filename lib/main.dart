@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foody/screens/Intro/onboarding_screen.dart';
-import 'package:foody/screens/auth/login_screen.dart';
-import 'package:foody/screens/auth/auth_option_screen.dart';
-import 'package:foody/screens/auth/registration_screen.dart';
+import 'package:foody/screens/main_pages/category_detail_screen.dart';
+import 'package:foody/screens/main_pages/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -22,8 +20,10 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.montserratAlternates().fontFamily,
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const HomeScreen(),
+      // home: CategoryDetailScreen(),
     );
   }
+
 }
 

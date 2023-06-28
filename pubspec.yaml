@@ -32,7 +32,9 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   google_fonts: ^5.0.0
-  custom_navigation_bar: ^0.8.2
+  salomon_bottom_bar: ^3.3.2
+  flutter_custom_tab_bar: ^1.2.1
+  scroll_page_view: ^1.0.2
 
 dev_dependencies:
   flutter_test:

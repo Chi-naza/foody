@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize:  12,
                         fontWeight:  FontWeight.w700,
                         height:  1.8,
-                        color:  Color(0xff0eb176),
+                        color:  FoodyColors.textFoodyGreen,
                       ),
                     ),
                   ),
@@ -84,6 +84,48 @@ class _LoginScreenState extends State<LoginScreen> {
                 backgroundColor: FoodyColors.mainColor,
                 onTapped: (){}
               ),
+              SizedBox(height: 20),
+              Container(
+                margin:  EdgeInsets.fromLTRB(79, 0, 78, 0),
+                width:  double.infinity,
+                child: Row(
+                  crossAxisAlignment:  CrossAxisAlignment.center,
+                  children:  [
+                    Center(
+                      child: Container(
+                        margin:  EdgeInsets.fromLTRB(0, 0, 4, 0),
+                        child: Text(
+                          "Don't have an account?",
+                          textAlign:  TextAlign.center,
+                          style:  GoogleFonts.inter(
+                            fontSize:  12,
+                            fontWeight:  FontWeight.w400,
+                            height:  1.5,
+                            color:  FoodyColors.textFoodyGreen,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: InkWell(
+                        onTap: (){
+                          print('Go to register screen');
+                        },
+                        child: Text(
+                          'Register',
+                          textAlign:  TextAlign.center,
+                          style:  GoogleFonts.inter(
+                            fontSize:  12,
+                            fontWeight:  FontWeight.w700,
+                            height:  1.5,
+                            color:  Color(0xff0eb176),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -91,17 +133,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-
-// Center(
-//   child: Text(
-//     'yourmail@mail.com',
-//     textAlign:  TextAlign.center,
-//     style:  GoogleFonts.inter(
-//       fontSize:  12,
-//       fontWeight:  FontWeight.w400,
-//       height:  1.2125,
-//       color:  Color(0xffbdbdbd),
-//     ),
-//   ),
-// ),
