@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:foody/screens/main_pages/category_detail_screen.dart';
+import 'package:foody/bindings/custom_app_bindings.dart';
 import 'package:foody/screens/main_pages/home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  CustomAppBinding().dependencies();
   runApp(const MyApp());
 }
 

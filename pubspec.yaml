@@ -35,6 +35,8 @@ dependencies:
   salomon_bottom_bar: ^3.3.2
   flutter_custom_tab_bar: ^1.2.1
   scroll_page_view: ^1.0.2
+  get: ^4.6.5
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:
