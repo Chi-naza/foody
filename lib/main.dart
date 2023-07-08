@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foody/bindings/custom_app_bindings.dart';
-import 'package:foody/screens/main_pages/home_screen.dart';
+import 'package:foody/routes/app_routes.dart';
+import 'package:foody/screens/Intro/onboarding_screen.dart';
+import 'package:foody/screens/Intro/splash_screen.dart';
+import 'package:foody/screens/test_screen.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -15,15 +19,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Foody',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF53B97C)),
         fontFamily: GoogleFonts.montserratAlternates().fontFamily,
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
-      // home: CategoryDetailScreen(),
+      getPages: AppRoutes.routes,
+      // home: const OnboardingScreen(),
     );
   }
 

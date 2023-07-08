@@ -9,7 +9,7 @@ class HelperAPIMethods {
   static final GetConnect _getConnect = GetConnect(timeout: const Duration(seconds: 30), maxAuthRetries: 3);
 
   // Setting up authorization for basic auth
-  static String basicAuth = 'Basic ${base64.encode(utf8.encode("${FoodyLocals.USER_NAME}:${FoodyLocals.PASSWORD}"))}';
+  static String basicAuth = 'Basic ${base64.encode(utf8.encode("${FoodyLocals.EMAIL}:${FoodyLocals.PASSWORD}"))}';
 
 
   static Map<String, String> foodyHeaders =  {
@@ -46,7 +46,7 @@ class HelperAPIMethods {
 
 
   // A function performing POST request to a server
-  static Future<Response> postData(String uri, dynamic body, bool withHeader) async {    
+  static Future<Response> postData({required String uri, required dynamic body, required bool withHeader}) async {    
     try{
       if(withHeader){
         Response response = await _getConnect.post(uri, body, headers: foodyHeaders);

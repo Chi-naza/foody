@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
+import 'package:foody/screens/auth/auth_option_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/header_background.dart';
+import 'package:get/get.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
+
+  static const String routeName = '/onboarding';
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +31,10 @@ class OnboardingScreen extends StatelessWidget {
               ),
               SizedBox(height: 50),
               // The Text Before the Button
-              SizedBox(
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  'Foody is a solution for Grocery Shopping; everything you need',
+                  'Onics Store is a solution for Grocery Shopping; everything you need',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -43,7 +48,7 @@ class OnboardingScreen extends StatelessWidget {
               FoodyMainButton(
                 text: 'Get Started', 
                 onTapped: (){
-                  print('We will start soon enough !');
+                  Get.offNamed(AuthOptionsScreen.routeName);
                 },
               ),                  
             ],

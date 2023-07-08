@@ -1,5 +1,5 @@
 class FoodyLocals {
-  static const String TOKEN = "";
-  static const String USER_NAME = "";
-  static const String PASSWORD = "";
+  static String TOKEN = "token";
+  static String EMAIL = "email";
+  static String PASSWORD = "pswd";
 }

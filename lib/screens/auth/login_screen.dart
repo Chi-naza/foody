@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/constants/foody_images.dart';
+import 'package:foody/controllers/auth_controller.dart';
+import 'package:foody/screens/auth/registration_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/header_background.dart';
 import 'package:foody/widgets/textfield_widget.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  static const String routeName = '/login';
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  final authController = Get.find<AuthController>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,27 +59,27 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 20),
               // Email Section
-              const TextFieldWidget(
+              TextFieldWidget(
                 text: 'email', 
                 hintText: 'yourmail@mail.com',
                 keyboardType: TextInputType.emailAddress,
+                inputController: emailController,
               ),
               SizedBox(height: 30),
               // Email Section
-              const TextFieldWidget(
+              TextFieldWidget(
                 text: 'password', 
                 hintText: 'your password here',
                 keyboardType: TextInputType.visiblePassword,
                 isPassword: true,
+                inputController: passwordController,
               ),
               SizedBox(height: 20),
               Center(
                 child: Container(
                   margin:  EdgeInsets.fromLTRB(255, 0, 0, 18),
                   child: InkWell(
-                    onTap: (){
-                      print('You forgot your password');
-                    },
+                    onTap: (){},
                     child: Text(
                       'Forgot Password',
                       textAlign:  TextAlign.center,
@@ -82,7 +100,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 370,
                 textColor: Colors.white,
                 backgroundColor: FoodyColors.mainColor,
-                onTapped: (){}
+                onTapped: (){
+                  var email = emailController.text.trim();
+                  var pswd = passwordController.text.trim(); 
+                  // if form is valid, then proceed with signIn
+                  bool emailValid = authController.validateTextInputData(text: email, isEmail: true);
+                  if(!emailValid) return;
+                  bool pswdValid = authController.validateTextInputData(text: pswd, isPassword: true);
+                  if(!pswdValid) return;
+                  
+                  // calling registration function if form is valid                       
+                  if(emailValid && pswdValid){
+                    authController.loginUser(email, pswd);
+                  }
+                }
               ),
               SizedBox(height: 20),
               Container(
@@ -109,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Center(
                       child: InkWell(
                         onTap: (){
-                          print('Go to register screen');
+                          Get.toNamed(RegistrationScreen.routeName);
                         },
                         child: Text(
                           'Register',

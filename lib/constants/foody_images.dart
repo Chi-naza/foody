@@ -17,4 +17,11 @@ class FoodyImages {
   static const String carouselImage = "assets/images/carousel.png";
   static const String speedDialImage = "assets/images/speeddial.jpg";
   static const String carrotDetailImage = "assets/images/carrot-detail.jpg";
+
+  // Profile
+  static const String profileAvatar = "assets/images/avatar.png";
+
+  // Speed Dial
+  static const String speedDial1 = "assets/images/speeddial2.png";
+  static const String speedDial2 = "assets/images/speeddial3.png";
 }

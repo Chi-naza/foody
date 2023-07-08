@@ -9,8 +9,9 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextEditingController? inputController;
   final bool isPassword;
+  final bool isEmail;
 
-  const TextFieldWidget({super.key, required this.text, required this.hintText, this.boxWidth, this.keyboardType, this.inputController, this.isPassword=false});
+  const TextFieldWidget({super.key, required this.text, required this.hintText, this.boxWidth, this.keyboardType, this.inputController, this.isPassword=false, this.isEmail=false});
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,35 @@ class TextFieldWidget extends StatelessWidget {
             cursorColor: FoodyColors.mainColor,
             keyboardType: keyboardType?? TextInputType.text,
             obscureText: isPassword,
+            validator: ((text) {
+              if(isEmail){
+                if(text!.isEmpty){
+                  return 'Email field is empty. Provide your email';
+                }else if(!text.contains('@') || !text.contains('.')){
+                  return 'Invalid email address';
+                }else{
+                  return null;
+                }
+              }
+
+              if(isPassword){
+                if(text!.isEmpty){
+                  return 'Password field is empty';
+                }else if(text!.length < 8){
+                  return 'Password must be at least 8 characters';
+                }else{
+                  return null;
+                }
+              }
+
+              if(!isPassword && !isEmail){
+                if(text!.isEmpty){
+                  return 'No value provided here';
+                }else{
+                  return null;
+                }
+              }
+            }),
             style: GoogleFonts.inter(
               fontSize:  14,
               fontWeight:  FontWeight.w400,

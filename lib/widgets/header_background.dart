@@ -32,7 +32,7 @@ class HeaderBackgroundWidget extends StatelessWidget {
                 children: [
                   // text
                   Text(
-                    "Foody",
+                    "Onics Store",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: foodyTextFontSize?? 40,
