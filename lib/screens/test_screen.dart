@@ -1,24 +1,99 @@
+import 'package:dialogs/dialogs.dart';
 import 'package:flutter/material.dart';
-import 'package:foody/controllers/auth_controller.dart';
-import 'package:get/get.dart';
+import 'package:foody/widgets/foody_main_button.dart';
+import 'package:foody/widgets/option_dialog.dart';
 
-class TestScreen extends GetView<AuthController> {
-  const TestScreen({super.key});
+class TestScreen extends StatefulWidget {
+  TestScreen({Key? key}) : super(key: key);
+
+  @override
+  _TestScreenState createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> {
+  final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            // Testing APIs
-            // await controller.loginUser("programmerchinaza@gmail.com", "string12345678");
-            controller.showSweetToast(message: "Hello dear, I am doing this");
-            // controller.showUserDetailsInLocals();
-            print("REGISTRATION DONE !");
-          },
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-          child: const Text('Test API', style: TextStyle(fontWeight: FontWeight.bold)),
+      appBar: AppBar(
+        title: Text('Dialogs'),
+        centerTitle: true,
+      ),
+      body: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(bottom: 60.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.blue,
+                  ),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                onPressed: () {
+                  final choice = ChoiceDialog(
+                    dialogBackgroundColor: Colors.white,
+                  );
+                  choice.show(context);
+                  // ChoiceDialog().show(context,
+                  //     barrierColor: Colors.black, barrierDismissible: true);
+                },
+                child: Text('Show Choice Dialog')),
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.blue,
+                  ),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                onPressed: () async {
+                  MessageDialog messageDialog = MessageDialog(
+                      dialogBackgroundColor: Colors.white,
+                      buttonOkColor: Colors.red,
+                      title: 'Dialog Title',
+                      titleColor: Colors.black,
+                      message: 'Dialog Message',
+                      messageColor: Colors.black,
+                      buttonOkText: 'Ok',
+                      dialogRadius: 15.0,
+                      buttonRadius: 18.0,
+                      iconButtonOk: Icon(Icons.one_k));
+                  messageDialog.show(context, barrierColor: Colors.white);
+                },
+                child: Text(
+                  'Show Message Dialog',
+                )),
+            TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Colors.blue,
+                  ),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+                onPressed: () async {
+                  ProgressDialog progressDialog = ProgressDialog(
+                    context: context,
+                    backgroundColor: Colors.blue,
+                    textColor: Colors.white,
+                  );
+
+                  progressDialog.show();
+                  Future.delayed(Duration(seconds: 3))
+                      .then((value) => progressDialog.dismiss());
+                },
+                child: Text(
+                  'Show Progress Dialog',
+                )),
+
+                //TEST
+                FoodyMainButton(text: 'Check Your Own', onTapped: (){
+                  showChoiceDialog(title: 'Hello Dearie', message: 'I want you to know that I will do all possible to make it well', okOnPressed: (){});
+                })
+          ],
         ),
       ),
     );

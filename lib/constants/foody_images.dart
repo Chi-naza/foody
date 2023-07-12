@@ -24,4 +24,7 @@ class FoodyImages {
   // Speed Dial
   static const String speedDial1 = "assets/images/speeddial2.png";
   static const String speedDial2 = "assets/images/speeddial3.png";
+
+  // Cart
+  static const String emptyCartImage = "assets/images/empty_cart.png";
 }

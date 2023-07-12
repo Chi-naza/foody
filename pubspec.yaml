@@ -38,6 +38,11 @@ dependencies:
   get: ^4.6.5
   shared_preferences: ^2.2.0
   fluttertoast: ^8.2.1
+  dialogs: ^0.0.7
+  money_formatter: ^0.0.4
+  intl: ^0.18.1
+  flutter_credit_card: ^3.0.7
+  flutter_otp_text_field: ^1.1.1
 
 dev_dependencies:
   flutter_test:

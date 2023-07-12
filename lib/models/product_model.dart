@@ -1,6 +1,6 @@
 class ProductModel {
   int id;
-  Category category;
+  CategoryModel category;
   String name;
   String slug;
   String image;
@@ -29,7 +29,7 @@ class ProductModel {
 
   ProductModel.fromJson(Map<String, dynamic> json) :
     id = json['id'],
-    category =  Category.fromJson(json['category']),
+    category =  CategoryModel.fromJson(json['category']),
     name = json['name'],
     slug = json['slug'],
     image = json['image'] ?? "",
@@ -60,14 +60,14 @@ class ProductModel {
   }
 }
 
-class Category {
+class CategoryModel {
   int id;
   String name;
   String slug;
 
-  Category({required this.id, required this.name, required this.slug});
+  CategoryModel({required this.id, required this.name, required this.slug});
 
-  Category.fromJson(Map<String, dynamic> json) :
+  CategoryModel.fromJson(Map<String, dynamic> json) :
     id = json['id'],
     name = json['name'],
     slug = json['slug'];
@@ -78,6 +78,29 @@ class Category {
     data['id'] = this.id;
     data['name'] = this.name;
     data['slug'] = this.slug;
+    return data;
+  }
+}
+
+
+
+
+// Full Category Model
+class FullCategoryModel {
+  String name; 
+  String image;
+
+  FullCategoryModel({required this.name, required this.image});
+
+  FullCategoryModel.fromJson(Map<String, dynamic> json) :
+    name = json['name'],
+    image = json['image'];
+
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    data['image'] = this.image;
     return data;
   }
 }

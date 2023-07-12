@@ -30,7 +30,7 @@ class CategoryItemWidget extends StatelessWidget {
               child: SizedBox(
                 width:  49,
                 height:  30,
-                child: Image.asset(
+                child: Image.network(
                   itemImage, // 'assets/images/spinach...'
                   fit:  BoxFit.cover,
                 ),

@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
-import 'package:foody/constants/foody_images.dart';
+import 'package:foody/controllers/auth_controller.dart';
+import 'package:foody/controllers/product_controller.dart';
+import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/models/product_model.dart';
+import 'package:foody/screens/cart_screen.dart';
 import 'package:foody/widgets/related_product_card.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoryDetailScreen extends StatefulWidget {
-  const CategoryDetailScreen({super.key});
+  final ProductModel product; 
+  
+  const CategoryDetailScreen({super.key, required this.product});
+
+  static const String routeName = '/product-category-detail';
 
   @override
   State<CategoryDetailScreen> createState() => _CategoryDetailScreenState();
+  
 }
 
 class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
 
+  // for the two tabs
   int tabIndex = 0;
+  
+  // instance of controller
+  final authController = Get.find<AuthController>();
+  final productController = Get.find<ProductController>();
+
+  // quantity desired
+  int quantityDesired = 0;
   
   @override
   Widget build(BuildContext context) {
@@ -27,11 +45,11 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               width:  double.infinity,
               height:  341,
               child: Container(
-                decoration:  const BoxDecoration (
-                  color:  Color(0xffc4c4c4),
+                decoration:  BoxDecoration (
+                  color:  const Color(0xffc4c4c4),
                   image:  DecorationImage (
                     fit:  BoxFit.cover,
-                    image:  AssetImage(FoodyImages.carrotDetailImage),
+                    image:  NetworkImage(FoodyAPI.BASE_URL + widget.product.image),
                   ),
                 ),
                 child: Container(
@@ -67,7 +85,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                 ),
                 child: ListView(
                   children: [
-                    // Vegetables Tag
+                    // Categories Tag
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -78,7 +96,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                           borderRadius:  BorderRadius.circular(30),
                         ),                     
                         child: Text(
-                          'vegetables',
+                          widget.product.category.name, // 'vegetables',
                           style:  GoogleFonts.inter(
                             fontSize:  15,
                             fontWeight:  FontWeight.w500,
@@ -92,7 +110,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        'Fresh Carrot',
+                        widget.product.name, // 'Fresh Carrot',
                         style:  GoogleFonts.inter(
                           fontSize:  24,
                           fontWeight:  FontWeight.w700,
@@ -105,9 +123,9 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                     // The Price and Kilogram
                     Row(
                       children: [
-                        // price
+                        // price (discount)
                         Text(
-                          'Rp 18,000',
+                          '# ${productController.formatToMoney(widget.product.discountPrice.toString())}',  // 'Rp 18,000',
                           style:  GoogleFonts.inter(
                             fontSize:  18,
                             fontWeight:  FontWeight.w700,
@@ -126,7 +144,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                         SizedBox(width: 5),
                         // Original Price Canceled
                         Text(
-                          'Rp 21,000',
+                          '# ${productController.formatToMoney(widget.product.realPrice.toString())}',  // 'Rp 21,000',
                           style: GoogleFonts.inter(
                             fontSize:  12,
                             fontWeight:  FontWeight.w500,
@@ -189,7 +207,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                                 children: [
                                   // Description Text
                                   Text(
-                                    'The carrot is a root vegetable, most commonly observed as orange in color, though purple, black, red, white, and yellow cultivars exist, all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia.',
+                                    widget.product.description,  // 'The carrot is a root vegetable, most commonly observed as orange . . . .',
                                     style:  GoogleFonts.inter(
                                       fontSize:  13,
                                       fontWeight:  FontWeight.w400,
@@ -232,7 +250,21 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                             ) 
                             :  
                             // View For Nutritional Facts
-                            Icon(Icons.directions_transit, size: 350),
+                            Container(
+                              height: 100,
+                              child: const Center(
+                                child: Text(
+                                  'Details coming soon . . . !',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: FoodyColors.textFoodyGrey,
+                                    letterSpacing: 2,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -248,7 +280,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
         padding:  EdgeInsets.fromLTRB(30, 22, 23, 21),
         width:  375,
         height:  92,
-        decoration:  BoxDecoration (
+        decoration:  const BoxDecoration (
           color:  Colors.white,
           borderRadius:  BorderRadius.only (
             topLeft:  Radius.circular(34),
@@ -268,9 +300,13 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             // Remove Icon
             IconButton(
               onPressed: () {
-                print('Removing item');
+                if(quantityDesired > 0){
+                  setState(() {
+                    quantityDesired -= 1;
+                  });
+                }
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.remove,
                 color: FoodyColors.textFoodyGreen2,
                 size: 28,
@@ -288,7 +324,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               child: Center(
                 child: Center(
                   child: Text(
-                    '2',
+                    quantityDesired.toString(), // quantity selected/desired
                     textAlign:  TextAlign.center,
                     style:  GoogleFonts.inter(
                       fontSize:  18,
@@ -303,9 +339,11 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             // Add Icon
             IconButton(
               onPressed: () {
-                print('Adding item');
+                setState(() {
+                  quantityDesired += 1;
+                });
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add,
                 color: FoodyColors.textFoodyGreen2,
                 size: 28,
@@ -314,8 +352,22 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
             SizedBox(width: 10),
             // Add To Cart Button wrapped with InkWell
             InkWell(
-              onTap: (){
-                print('Adding to cart . . .');
+              onTap: () async{
+                if(quantityDesired == 0){
+                  authController.showSweetToast(message: 'Quantity is zero. Add at least one of this product', isSuccess: false);
+                }else {
+                  // Computing total amount for a product based on the quantity desired
+                  var total = quantityDesired * double.parse(widget.product.discountPrice);
+                  // Calling the method that will add product to cart
+                  productController.addProductToCart(
+                    product: widget.product, 
+                    quantity: quantityDesired, 
+                    totalPrice: total.toString(),
+                  );
+                  setState(() { quantityDesired = 0;});
+                  Future.delayed(const Duration(seconds: 3));
+                  Get.toNamed(CartScreen.routeName);
+                }
               },
               child: Container(
                 width:  181,
@@ -323,7 +375,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                 decoration:  BoxDecoration (
                   color:  FoodyColors.textFoodyGreen2,
                   borderRadius:  BorderRadius.circular(10),
-                  boxShadow:  [
+                  boxShadow: const [
                     BoxShadow(
                       color:  Color(0x11000000),
                       offset:  Offset(0, 3),

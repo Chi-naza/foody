@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
-import 'package:foody/constants/foody_images.dart';
+import 'package:foody/controllers/product_controller.dart';
+import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/screens/cart_screen.dart';
 import 'package:foody/widgets/category_item_widget.dart';
 import 'package:foody/widgets/gridview_widget.dart';
+import 'package:foody/widgets/option_dialog.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
 
-class CategoryListScreen extends StatelessWidget {
+class CategoryListScreen extends StatefulWidget {
+  
   const CategoryListScreen({super.key});
+
+  static const String routeName = '/product-categories';
+
+  @override
+  State<CategoryListScreen> createState() => _CategoryListScreenState();
+}
+
+class _CategoryListScreenState extends State<CategoryListScreen> {
+
+  ProductController productController = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 6,
+      length: productController.allCategoryFullList.length,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(220),
-          child: AppBar(          
+          child: AppBar(    
+            automaticallyImplyLeading: false,      
             title: SizedBox(
               child: // The Search Section
               Column(
@@ -30,9 +46,7 @@ class CategoryListScreen extends StatelessWidget {
                         icon: Icon(
                           Icons.arrow_back_ios_new,
                         ),
-                        onPressed: (){
-                          print('Pressed Back Button');
-                        },
+                        onPressed: () => Get.back(),
                       ),
                       // The Search Field
                       Expanded(
@@ -78,7 +92,7 @@ class CategoryListScreen extends StatelessWidget {
                           Icons.shopping_cart_outlined,
                         ),
                         onPressed: (){
-                          print('Pressed Cart Icon');
+                          Get.toNamed(CartScreen.routeName);
                         },
                       ),
                     ],
@@ -87,50 +101,29 @@ class CategoryListScreen extends StatelessWidget {
                 ],
               ),
             ),
-            bottom: TabBar(
+            bottom: TabBar(             
               isScrollable: true,
               indicatorWeight: 3,
-              tabs: [
-                Tab(
-                  child: CategoryItemWidget(
-                    itemName: 'Fruits',
-                    itemImage: FoodyImages.spinach,
-                  ),
+              tabs: List.generate(productController.allCategoryFullList.length, (index) {
+                var item = productController.allCategoryFullList[index];                
+                return Tab(
                   height: 130,
-                ),
-                Tab(
                   child: CategoryItemWidget(
-                    itemName: 'Baked Muffin',
-                    itemImage: FoodyImages.bakedMuffin,
+                    itemName: item.name,  //'Fruits',
+                    itemImage: FoodyAPI.BASE_URL + item.image,  //FoodyImages.spinach,
                   ),
-                  height: 130,
-                ),
-                Tab(
-                  child: CategoryItemWidget(
-                    itemName: 'Juicy',
-                    itemImage: FoodyImages.juicyFruit,
-                  ),
-                  height: 130,
-                ),
-                Tab(
-                  child: CategoryItemWidget(
-                    itemName: 'Milk Box',
-                    itemImage: FoodyImages.milkBox,
-                  ),
-                  height: 130,
-                ),
-              ],
+                );
+              }),
             ),
           ),
         ),
-        body: const TabBarView(
-          children: [
-            FoodyGridViewWidget(),
-            Icon(Icons.flight, size: 350),
-            Icon(Icons.directions_transit, size: 350),
-            Icon(Icons.directions_transit, size: 350),
-            Icon(Icons.directions_car, size: 350),
-          ],
+        body: TabBarView(
+          children: List.generate(productController.allCategoryFullList.length, (index) {
+            var catItem = productController.allCategoryFullList[index];
+            // var generatedList = productController.fetchProductsOfDifferentCategories(catItem.name);
+            // var prodItem = generatedList[index];
+            return FoodyGridViewWidget(categoryName: catItem.name);
+          }),
         ),
       ),
     );

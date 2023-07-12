@@ -21,13 +21,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Foody',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF53B97C)),
         fontFamily: GoogleFonts.montserratAlternates().fontFamily,
         useMaterial3: true,
       ),
       getPages: AppRoutes.routes,
-      // home: const OnboardingScreen(),
+      // home: TestScreen(),
     );
   }
 

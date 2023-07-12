@@ -1,9 +1,14 @@
+import 'package:foody/controllers/payment_controller.dart';
 import 'package:foody/screens/Intro/onboarding_screen.dart';
 import 'package:foody/screens/Intro/splash_screen.dart';
 import 'package:foody/screens/auth/auth_option_screen.dart';
 import 'package:foody/screens/auth/login_screen.dart';
 import 'package:foody/screens/auth/registration_screen.dart';
+import 'package:foody/screens/cart_screen.dart';
+import 'package:foody/screens/main_pages/category_detail_screen.dart';
+import 'package:foody/screens/main_pages/category_list_screen.dart';
 import 'package:foody/screens/main_pages/home_screen.dart';
+import 'package:foody/screens/orders/ordered_products_screen.dart';
 import 'package:get/get.dart';
 
 
@@ -44,6 +49,25 @@ class AppRoutes {
       name: AuthOptionsScreen.routeName,
       page: () => const AuthOptionsScreen(), 
       transition: Transition.fade,    
+    ),
+    // Category List Sceen
+    GetPage(
+      name: CategoryListScreen.routeName,
+      page: () => const CategoryListScreen(), 
+      transition: Transition.fade,    
+    ),
+    // Cart Screen
+    GetPage(
+      name: CartScreen.routeName,
+      page: () => const CartScreen(), 
+      transition: Transition.fade,  
+      binding: BindingsBuilder.put(() => PaymentController())  
+    ),
+    // Orders Screen
+    GetPage(
+      name: OrderedProductsScreen.routeName,
+      page: () => const OrderedProductsScreen(), 
+      transition: Transition.cupertino,    
     ),
   ];
 

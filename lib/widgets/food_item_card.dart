@@ -1,10 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FoodItemCard extends StatefulWidget {
+  final String price;
+  final String discountPrice;
+  final String productName;
+  final String image;
+  final VoidCallback addToCartFunc;
 
-  const FoodItemCard({super.key});
+  const FoodItemCard({super.key, required this.price, required this.discountPrice, required this.productName, required this.image, required this.addToCartFunc});
 
   @override
   State<FoodItemCard> createState() => _FoodItemCardState();
@@ -43,9 +49,9 @@ class _FoodItemCardState extends State<FoodItemCard> {
               color:  Color(0xffc4c4c4),
               image:  DecorationImage (
                 fit:  BoxFit.cover,
-                image:  AssetImage(FoodyImages.carrotPic), // food image
+                image:  NetworkImage(widget.image), // food image
               ),
-              borderRadius:  BorderRadius.only (
+              borderRadius:  const BorderRadius.only (
                 topLeft:  Radius.circular(10),
                 topRight:  Radius.circular(10),
               ),
@@ -57,7 +63,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                   setState(() {
                     isFavorite = !isFavorite;
                   });
-                  print('My Favorite');
+                  if(kDebugMode)print('My Favorite');
                 },
                 child: SizedBox(
                   width:  31.28,
@@ -66,7 +72,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                     margin:  EdgeInsets.fromLTRB(0, 0, 0, 90.3),
                     child: Icon(
                         Icons.favorite,
-                        color: isFavorite? Colors.green : Colors.white,
+                        color: isFavorite? Colors.red : Colors.white,
                     ),
                   ),
               ),
@@ -76,7 +82,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
           Container(
             margin:  EdgeInsets.fromLTRB(12, 0, 0, 0),
             child: Text(
-              'Fresh Carrot',
+              widget.productName,  //'Fresh Carrot',
               style:  GoogleFonts.inter (
                 fontSize:  14,
                 fontWeight:  FontWeight.w600,
@@ -100,7 +106,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                       Container(
                         margin:  EdgeInsets.fromLTRB(0, 0, 2, 0),
                         child: Text(
-                          'Rp 18,000',
+                          '# ${widget.discountPrice}',  // '# 18,000
                           style:  GoogleFonts.inter(
                             fontSize:  13,
                             fontWeight:  FontWeight.w700,
@@ -137,13 +143,14 @@ class _FoodItemCardState extends State<FoodItemCard> {
                             width:  50,
                             height:  21,
                             child: Text(
-                              'Rp 21,000',
+                              '# ${widget.price}',
                               style:  GoogleFonts.inter(
                                 fontSize:  11,
                                 fontWeight:  FontWeight.w500,
                                 height:  1.9090909091,
                                 letterSpacing:  -0.3199999928,
-                                color:  Color(0xffbdbdbd),
+                                decoration: TextDecoration.lineThrough,
+                                color:  const Color(0xffbdbdbd),
                               ),
                             ),
                           ),
@@ -153,9 +160,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                   ),
                 ),
                 InkWell(
-                  onTap: (){
-                    print('Added to cart !');
-                  },
+                  onTap: widget.addToCartFunc,
                   child: Container(
                     margin:  EdgeInsets.fromLTRB(107, 0, 0, 0),
                     width:  28,

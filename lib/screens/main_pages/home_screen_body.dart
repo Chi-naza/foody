@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
+import 'package:foody/controllers/product_controller.dart';
+import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/screens/main_pages/category_list_screen.dart';
+import 'package:foody/screens/orders/ordered_products_screen.dart';
 import 'package:foody/widgets/header_background.dart';
 import 'package:foody/widgets/category_item_widget.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:scroll_page_view/pager/page_controller.dart';
@@ -28,6 +33,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     FoodyImages.speedDial1,
     FoodyImages.speedDial2,
   ];
+
+
+  // Controllers
+  ProductController productController = Get.find<ProductController>();
 
   @override
   void initState() {
@@ -83,7 +92,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               Icons.search,
                             ),
                             onPressed: (){
-                              print('Search Pressed');
+                              print('Search Pressed');                              
                             },
                           ),
                           border: InputBorder.none,                        
@@ -94,12 +103,12 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   // Back Icon
                   IconButton(
                     icon: Icon(
-                      Icons.email_outlined,
+                      Icons.list_alt,
                       color: Colors.white,
                       size: 28,
                     ),
                     onPressed: (){
-                      print('Pressed message Button');
+                      Get.toNamed(OrderedProductsScreen.routeName);
                     },
                   ),
                   // Cart Icon
@@ -131,7 +140,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           )
                         ),
                         Text(
-                          'Sent to',
+                          'Sent to:',
                           style:  GoogleFonts.inter(
                             fontSize:  12,
                             fontWeight:  FontWeight.w400,
@@ -142,9 +151,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       ],
                     ),
                   ),
+                  SizedBox(width: 8),
                   // location
                   Text(
-                    'Pamulang Barat Residence No.5, RT 05/ ...',
+                    'Enugu Baraji Residence No.5, RT 05/ ...',
                     style:  GoogleFonts.inter(
                       fontSize:  12,
                       fontWeight:  FontWeight.w600,
@@ -199,46 +209,28 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 ),
               ),                
               // List of Categories
-              Container(
-                height: 150,
-                // color: Colors.red[100],
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    CategoryItemWidget(
-                      itemName: 'Fruits',
-                      itemImage: FoodyImages.spinach,
+              Obx(() {
+                  return Container(
+                    height: 150,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: productController.allCategoryFullList.length,
+                      separatorBuilder: (context, index) => SizedBox(),
+                      itemBuilder: (context, index) {
+                        var catItem = productController.allCategoryFullList[index];
+                        return InkWell(
+                          onTap: (){
+                            Get.toNamed(CategoryListScreen.routeName);
+                          },
+                          child: CategoryItemWidget(
+                            itemName: catItem.name.substring(0,1).toUpperCase() + catItem.name.substring(1), 
+                            itemImage: FoodyAPI.BASE_URL + catItem.image,
+                          ),
+                        );
+                      },
                     ),
-                    CategoryItemWidget(
-                      itemName: 'Baked Muffin',
-                      itemImage: FoodyImages.bakedMuffin,
-                    ),
-                    CategoryItemWidget(
-                      itemName: 'Juicy',
-                      itemImage: FoodyImages.juicyFruit,
-                    ),
-                    CategoryItemWidget(
-                      itemName: 'Milk Box',
-                      itemImage: FoodyImages.milkBox,
-                    ),
-                    CategoryItemWidget(
-                      itemName: 'Fruits',
-                      itemImage: FoodyImages.spinach,
-                    ),
-                    CategoryItemWidget(
-                      itemName: 'Baked Muffin',
-                      itemImage: FoodyImages.bakedMuffin,
-                    ),
-                    CategoryItemWidget(
-                      itemName: 'Juicy',
-                      itemImage: FoodyImages.juicyFruit,
-                    ),
-                    CategoryItemWidget(
-                      itemName: 'Milk Box',
-                      itemImage: FoodyImages.milkBox,
-                    ),
-                  ],
-                ),
+                  );
+                }
               ),
               // Divider HERE
               const Divider(), 
@@ -260,7 +252,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     ),
                     InkWell(
                       onTap: (){
-                        print('Lets Go and See More . . .');
+                        Get.toNamed(CategoryListScreen.routeName); // See more items
                       },
                       child: Row(
                         children: [

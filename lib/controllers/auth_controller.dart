@@ -121,12 +121,14 @@ class AuthController extends GetxController {
 
 
   // Function which saves each user's number and password locally
-  Future<void> saveUserDetailsInLocals({String? token, String? email, String? password}) async {
+  Future<void> saveUserDetailsInLocals({String? token, String? email, String? password, String? flwRef, String? orderID}) async {
     final sharedPref = await SharedPreferences.getInstance();
     try{
       if(token != null) await sharedPref.setString(FoodyLocals.TOKEN , token);
       if(email != null) await sharedPref.setString(FoodyLocals.EMAIL, email);
       if(password != null) await sharedPref.setString(FoodyLocals.PASSWORD, password);
+      if(flwRef != null) await sharedPref.setString(FoodyLocals.FLW_REF, flwRef);
+      if(orderID != null) await sharedPref.setString(FoodyLocals.ORDER_ID, orderID);
     }catch (e){
       if(kDebugMode) print("SHARED_PREFERENCES :::::: Details not saved to the locals");
       throw e;      
@@ -141,10 +143,14 @@ class AuthController extends GetxController {
       String? token =  await sharedPref.getString(FoodyLocals.TOKEN);
       String? email =  await sharedPref.getString(FoodyLocals.EMAIL);
       String? password = await sharedPref.getString(FoodyLocals.PASSWORD);
+      String? flwRef = await sharedPref.getString(FoodyLocals.FLW_REF);
+      String? orderID = await sharedPref.getString(FoodyLocals.ORDER_ID);
       // For testing
       if(kDebugMode) print("USER_EMAIL: $email");
       if(kDebugMode) print("USER_PASSWORD: $password");
       if(kDebugMode) print("TOKEN: $token");
+      if(kDebugMode) print("FLW_REF: $flwRef");
+      if(kDebugMode) print("ORDER_ID: $orderID");
     }catch (e){
       if(kDebugMode) print("SHARED_PREFERENCES :::::: Details not saved to the locals");     
     }
@@ -168,6 +174,7 @@ class AuthController extends GetxController {
     sharedPref.remove(FoodyLocals.TOKEN);
     sharedPref.remove(FoodyLocals.PASSWORD);
     sharedPref.remove(FoodyLocals.EMAIL);
+    sharedPref.remove(FoodyLocals.CART);
     if(kDebugMode) print("AUTH DATA CLEARED SUCCESSFULLY");
     
     return true;
