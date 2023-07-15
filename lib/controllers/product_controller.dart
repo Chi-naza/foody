@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:foody/constants/cart_helper_methods.dart';
 import 'package:foody/controllers/auth_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/data/api/helper_methods.dart';
 import 'package:foody/locals/local_data.dart';
 import 'package:foody/models/create_order_model.dart';
@@ -28,7 +28,6 @@ class ProductController extends GetxController {
   @override
   void onReady() {
     fetchAllGroceryProducts();
-    fetchAllOrderedProducts();
     super.onReady();
   }
 
@@ -61,6 +60,9 @@ class ProductController extends GetxController {
 
       // Retrieve cart items from locals
       retrieveCartItemsFromLocals();
+
+      // Fetching ordered items of the current user
+      fetchAllOrderedProducts();
     }else {
       if(kDebugMode) print("FAILED TO FETCH PRODUCTS . . .");
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
+import 'package:sizer/sizer.dart';
 
 class HeaderBackgroundWidget extends StatelessWidget {
   final Widget children;
@@ -15,7 +16,7 @@ class HeaderBackgroundWidget extends StatelessWidget {
       children: [
         // Curved Header
         Container(
-          height: 450,
+          height: 57.h,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(FoodyImages.ellipseHeader),
@@ -26,7 +27,7 @@ class HeaderBackgroundWidget extends StatelessWidget {
         Positioned(
           child: Column(
             children: [
-              SizedBox(height: heightFromTop??80),
+              SizedBox(height: heightFromTop??10.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -35,20 +36,20 @@ class HeaderBackgroundWidget extends StatelessWidget {
                     "Onics Store",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: foodyTextFontSize?? 40,
+                      fontSize: foodyTextFontSize?? 31.sp,
                       color: Colors.white
                     ),
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 7.w),
                   // carrot image
                   Image.asset(FoodyImages.carrot),
                 ],
               ),
-              SizedBox(height: heightBtwTextnChildren??50),
+              SizedBox(height: heightBtwTextnChildren??8.h),
               // Children widget here
               children,
               // Extra space at screen end
-              SizedBox(height: 70),
+              SizedBox(height: 10.h),
             ],
           ),
         ),

@@ -7,6 +7,7 @@ import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/header_background.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 class AuthOptionsScreen extends StatefulWidget {
   const AuthOptionsScreen({super.key});
@@ -28,14 +29,14 @@ class _AuthOptionsScreenState extends State<AuthOptionsScreen> {
               // Man, Woman + Shopping  Cart
               Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.only(top: 40),
+                padding: EdgeInsets.only(top: 30.sp),
                 child: Image.asset(FoodyImages.personsNshoppingCart),
               ),
-              SizedBox(height: 70),
+              SizedBox(height: 10.h),
               // Login Button
               FoodyMainButton(
                 text: 'Login', 
-                width: 370,
+                width: 90.w,
                 textColor: Colors.white,
                 backgroundColor: FoodyColors.mainColor,
                 onTapped: (){
@@ -49,8 +50,8 @@ class _AuthOptionsScreenState extends State<AuthOptionsScreen> {
                   Get.toNamed(RegistrationScreen.routeName);
                 },
                 child: Container(
-                  width:  370,
-                  height:  54,
+                  width:  90.w,
+                  height:  7.h,
                   decoration:  BoxDecoration (
                     border:  Border.all(color: Color(0xff4bad73)),
                     borderRadius:  BorderRadius.circular(10),
@@ -61,7 +62,7 @@ class _AuthOptionsScreenState extends State<AuthOptionsScreen> {
                         'Register',
                         textAlign:  TextAlign.center,
                         style:  GoogleFonts.inter(
-                          fontSize:  18,
+                          fontSize:  17.sp,
                           fontWeight:  FontWeight.w600,
                           height:  1.2125,
                           color:  FoodyColors.mainColor3,

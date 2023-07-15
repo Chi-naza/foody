@@ -8,6 +8,7 @@ import 'package:foody/widgets/header_background.dart';
 import 'package:foody/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -45,40 +46,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Text(
                     'Register',
                     style:  GoogleFonts.inter(
-                      fontSize:  34,
+                      fontSize:  27.sp,
                       fontWeight:  FontWeight.w700,
                       height:  1.2058823529,
                       letterSpacing:  0.3740000129,
                       color:  Color(0xffffffff),
                     ),
                   ),
-                  SizedBox(width: 60),
+                  SizedBox(width: 15.w),
                   // Image at Login
                   Image.asset(FoodyImages.manIntro),
                 ],
               ),
               SizedBox(height: 20),              
-              // Email Section
-              TextFieldWidget(
-                text: 'email', 
-                hintText: 'yourmail@mail.com',
-                keyboardType: TextInputType.emailAddress,   
-                inputController: emailController,                  
-              ),
-              SizedBox(height: 30),
-              // Email Section
-              TextFieldWidget(
-                text: 'password', 
-                hintText: 'your password here',
-                keyboardType: TextInputType.visiblePassword,
-                isPassword: true,
-                inputController: passwordController,
-              ),                             
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                child: Column(
+                  children: [
+                    // Email Section
+                    TextFieldWidget(
+                      text: 'email', 
+                      hintText: 'yourmail@mail.com',
+                      keyboardType: TextInputType.emailAddress,   
+                      inputController: emailController,                  
+                    ),
+                    SizedBox(height: 30),
+                    // Email Section
+                    TextFieldWidget(
+                      text: 'password', 
+                      hintText: 'your password here',
+                      keyboardType: TextInputType.visiblePassword,
+                      isPassword: true,
+                      inputController: passwordController,
+                    ),              
+                  ],
+                ),
+              ),              
               SizedBox(height: 50),
               // Register Button
               FoodyMainButton(
                 text: 'Register', 
-                width: 370,
+                width: 86.w,
                 textColor: Colors.white,
                 backgroundColor: FoodyColors.mainColor,
                 onTapped: (){                  
@@ -97,46 +105,42 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 }
               ),
               SizedBox(height: 20),
-              Container(
-                margin:  EdgeInsets.fromLTRB(79, 0, 78, 0),
-                width:  double.infinity,
-                child: Row(
-                  crossAxisAlignment:  CrossAxisAlignment.center,
-                  children:  [
-                    Center(
-                      child: Container(
-                        margin:  EdgeInsets.fromLTRB(0, 0, 4, 0),
-                        child: Text(
-                          "Already have an account?",
-                          textAlign:  TextAlign.center,
-                          style:  GoogleFonts.inter(
-                            fontSize:  12,
-                            fontWeight:  FontWeight.w400,
-                            height:  1.5,
-                            color:  FoodyColors.textFoodyGreen,
-                          ),
+              Row(
+                mainAxisAlignment:  MainAxisAlignment.center,
+                children:  [
+                  Center(
+                    child: Container(
+                      margin:  EdgeInsets.fromLTRB(0, 0, 4, 0),
+                      child: Text(
+                        "Already have an account?",
+                        textAlign:  TextAlign.center,
+                        style:  GoogleFonts.inter(
+                          fontSize:  9.sp,
+                          fontWeight:  FontWeight.w400,
+                          height:  1.5,
+                          color:  FoodyColors.textFoodyGreen,
                         ),
                       ),
                     ),
-                    Center(
-                      child: InkWell(
-                        onTap: (){
-                          Get.toNamed(LoginScreen.routeName);
-                        },
-                        child: Text(
-                          'Login Here',
-                          textAlign:  TextAlign.center,
-                          style:  GoogleFonts.inter(
-                            fontSize:  12,
-                            fontWeight:  FontWeight.w700,
-                            height:  1.5,
-                            color:  Color(0xff0eb176),
-                          ),
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: (){
+                        Get.toNamed(LoginScreen.routeName);
+                      },
+                      child: Text(
+                        'Login Here',
+                        textAlign:  TextAlign.center,
+                        style:  GoogleFonts.inter(
+                          fontSize:  10.sp,
+                          fontWeight:  FontWeight.w700,
+                          height:  1.5,
+                          color:  Color(0xff0eb176),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

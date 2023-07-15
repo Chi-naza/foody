@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/screens/main_pages/category_list_screen.dart';
 import 'package:foody/screens/orders/ordered_products_screen.dart';
 import 'package:foody/widgets/header_background.dart';
@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:scroll_page_view/pager/page_controller.dart';
 import 'package:scroll_page_view/pager/scroll_page_view.dart';
+import 'package:sizer/sizer.dart';
 
 class HomeScreenBody extends StatefulWidget {
   const HomeScreenBody({super.key});
@@ -142,7 +143,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                         Text(
                           'Sent to:',
                           style:  GoogleFonts.inter(
-                            fontSize:  12,
+                            fontSize:  10.sp,
                             fontWeight:  FontWeight.w400,
                             letterSpacing:  0.3000000119,
                             color:  Color(0xffffffff),
@@ -153,12 +154,17 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   ),
                   SizedBox(width: 8),
                   // location
-                  Text(
-                    'Enugu Baraji Residence No.5, RT 05/ ...',
-                    style:  GoogleFonts.inter(
-                      fontSize:  12,
-                      fontWeight:  FontWeight.w600,
-                      color:  Color(0xffffffff),
+                  Container(
+                    // color: Colors.red,
+                    width: 55.w,
+                    child: Text(
+                      'Enugu Baraji Residence No.5, RT 05/hdjk dhhd',
+                      overflow: TextOverflow.ellipsis,
+                      style:  GoogleFonts.inter(
+                        fontSize:  10.sp,
+                        fontWeight:  FontWeight.w600,
+                        color:  Color(0xffffffff),
+                      ),
                     ),
                   ),
                   // arrow down icon
@@ -234,7 +240,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               ),
               // Divider HERE
               const Divider(), 
-              SizedBox(height: 20),
+              SizedBox(height: 2.h),
               // Special Dial & See More Section
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -285,12 +291,12 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 height: 170,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 3.w),
                   itemCount: 3,
                   itemBuilder: (context, index){
                     return Container(
-                      width:  145,
-                      height:  130,
+                      width:  35.w,
+                      height:  130.h,
                       child: Container(
                         decoration:  BoxDecoration (
                           borderRadius:  BorderRadius.circular(10),

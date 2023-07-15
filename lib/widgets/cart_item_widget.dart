@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/controllers/product_controller.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class CartItemWidget extends StatelessWidget {
 
@@ -52,7 +53,7 @@ class CartItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  productName, //cartItem.product.name,
+                  productName.substring(0,1).toUpperCase() + productName.substring(1), //cartItem.product.name,
                   style: TextStyle(color: Colors.red, fontWeight: FontWeight.w800)
                 ),
                 const Spacer(flex: 1),
@@ -66,7 +67,7 @@ class CartItemWidget extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: FoodyColors.textFoodyblack,
-                        fontSize: 13,
+                        fontSize: 10.sp,
                       ),                        
                     ),
                   ),
@@ -76,12 +77,12 @@ class CartItemWidget extends StatelessWidget {
                   height: 30,
                   child: Row(
                     children: [                     
-                      const Text(
+                      Text(
                         "Quantity :",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: FoodyColors.textFoodyblack,
-                          fontSize: 15,
+                          fontSize: 12.sp,
                         ),                        
                       ),
                       SizedBox(width: 7),

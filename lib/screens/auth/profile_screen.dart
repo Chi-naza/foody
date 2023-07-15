@@ -6,6 +6,7 @@ import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/locals/local_data.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class ProfileScreen extends StatefulWidget {
 
@@ -71,28 +72,28 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                 child:  Column(
                   children: <Widget>[
                     Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                        padding: EdgeInsets.only(left: 5.0.w, top: 2.0.h),
                         child:  Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                              Icon(
                               Icons.arrow_back_ios,
                               color: Colors.black,
-                              size: 22.0,
+                              size: 17.0.sp,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 25.0),
+                              padding: EdgeInsets.only(left: 6.0.w),
                               child:  Text(
                                 'PROFILE',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
+                                  fontSize: 13.0.sp,
                                   color: Colors.black,
                                 ),
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 130),
+                              padding: EdgeInsets.only(left: 27.w),
                               child:  InkWell(
                                 onTap: (){
                                   // A function that logs out the user
@@ -102,7 +103,7 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                                   'LOGOUT',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20.0,
+                                    fontSize: 13.0.sp,
                                     color: Colors.red,
                                   ),
                                 ),
@@ -171,9 +172,9 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                    Text(
-                                    'Parsonal Information',
+                                    'Personal Information',
                                     style: TextStyle(
-                                        fontSize: 18.0,
+                                        fontSize: 16.0.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -201,7 +202,7 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                                    Text(
                                     'Name',
                                     style: TextStyle(
-                                        fontSize: 16.0,
+                                        fontSize: 13.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -239,7 +240,7 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                                    Text(
                                     'Email ID',
                                     style: TextStyle(
-                                        fontSize: 16.0,
+                                        fontSize: 13.0.sp,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],

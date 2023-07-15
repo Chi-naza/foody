@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 class FoodItemCard extends StatefulWidget {
   final String price;
@@ -24,9 +25,9 @@ class _FoodItemCardState extends State<FoodItemCard> {
     return Container(
       margin:  EdgeInsets.fromLTRB(0, 0, 21, 0),
       width:  157,
-      height: 260,
+      height: 300.h,
       decoration:  BoxDecoration (
-        color:  Color(0xffffffff),
+        color: Color(0xffffffff),
         borderRadius:  BorderRadius.circular(10),
         boxShadow:  [
           BoxShadow(
@@ -44,7 +45,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
             margin:  EdgeInsets.fromLTRB(0, 0, 0, 7),
             padding:  EdgeInsets.fromLTRB(120, 5, 5.72, 5),
             width:  double.infinity,
-            height:  131,
+            height:  15.h,
             decoration:  BoxDecoration (
               color:  Color(0xffc4c4c4),
               image:  DecorationImage (
@@ -108,7 +109,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                         child: Text(
                           '# ${widget.discountPrice}',  // '# 18,000
                           style:  GoogleFonts.inter(
-                            fontSize:  13,
+                            fontSize:  10.sp,
                             fontWeight:  FontWeight.w700,
                             height:  1.6153846154,
                             letterSpacing:  -0.3199999928,
@@ -119,7 +120,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                       Text(
                         '/ kg',
                         style:  GoogleFonts.inter(
-                          fontSize:  10,
+                          fontSize:  9.sp,
                           fontWeight:  FontWeight.w400,
                           height:  1.3,
                           letterSpacing:  0.0659999996,
@@ -145,7 +146,7 @@ class _FoodItemCardState extends State<FoodItemCard> {
                             child: Text(
                               '# ${widget.price}',
                               style:  GoogleFonts.inter(
-                                fontSize:  11,
+                                fontSize:  10.sp,
                                 fontWeight:  FontWeight.w500,
                                 height:  1.9090909091,
                                 letterSpacing:  -0.3199999928,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:foody/controllers/auth_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/data/api/helper_methods.dart';
 import 'package:foody/screens/main_pages/home_screen.dart';
 import 'package:foody/screens/payments/payment_screen.dart';

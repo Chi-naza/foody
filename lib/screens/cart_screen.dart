@@ -4,14 +4,16 @@ import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/constants/foody_images.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/models/create_order_model.dart';
 import 'package:foody/screens/main_pages/category_detail_screen.dart';
+import 'package:foody/screens/payments/payment_screen.dart';
 import 'package:foody/widgets/cart_item_widget.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/option_dialog.dart';
 import 'package:foody/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 
 class CartScreen extends StatefulWidget {
@@ -145,7 +147,7 @@ class _CartScreenState extends State<CartScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               letterSpacing: 2,
-                              fontSize: 14,
+                              fontSize: 12.sp,
                             )
                           ),
                         ],
@@ -164,7 +166,8 @@ class _CartScreenState extends State<CartScreen> {
                           okOnPressed: (){
                             Get.back();
                             // Show bottom sheet
-                            showFoodyBottomSheet();
+                            // showFoodyBottomSheet();
+                            Get.to(PaymentScreen(orderID: 'ewjjsdmsjks'));
                           }
                         );
                       },

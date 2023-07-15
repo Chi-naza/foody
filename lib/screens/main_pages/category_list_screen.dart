@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/screens/cart_screen.dart';
 import 'package:foody/widgets/category_item_widget.dart';
 import 'package:foody/widgets/gridview_widget.dart';
@@ -109,7 +109,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                 return Tab(
                   height: 130,
                   child: CategoryItemWidget(
-                    itemName: item.name,  //'Fruits',
+                    itemName: item.name.substring(0,1).toUpperCase() + item.name.substring(1),  //'Fruits',
                     itemImage: FoodyAPI.BASE_URL + item.image,  //FoodyImages.spinach,
                   ),
                 );

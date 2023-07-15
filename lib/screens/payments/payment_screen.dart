@@ -5,6 +5,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/controllers/payment_controller.dart';
+import 'package:foody/screens/payments/payment_verification_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
@@ -34,13 +35,14 @@ class PaymentScreenState extends State<PaymentScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+
    // Text Controllers
   final cardPinController = TextEditingController();
 
   // authController instance
   final authController = Get.find<AuthController>();
   // paymentController instance
-  final paymentController = Get.find<PaymentController>();
+  final paymentController =  Get.put(PaymentController());
 
   @override
   void initState() {

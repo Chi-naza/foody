@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/widgets/cart_item_widget.dart';
 import 'package:get/get.dart';
 

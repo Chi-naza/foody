@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/screens/main_pages/category_detail_screen.dart';
 import 'package:foody/widgets/food_item_card.dart';
 import 'package:foody/widgets/option_dialog.dart';
@@ -19,7 +19,7 @@ class FoodyGridViewWidget extends StatelessWidget {
     final generatedList = productController.fetchProductsOfDifferentCategories(categoryName);
         
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         mainAxisSpacing: 17,
         childAspectRatio: 0.70385,

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foody/constants/foody_colors.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/data/api/helper_methods.dart';
 import 'package:foody/locals/local_data.dart';
 import 'package:foody/screens/Intro/onboarding_screen.dart';
@@ -25,7 +25,7 @@ class AuthController extends GetxController {
 
   // Start Foody App
   Future<void> startFoodyApp() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     // Checking user status
     bool isLoggedIn = await isUserLoggedIn(); 
 
@@ -73,7 +73,7 @@ class AuthController extends GetxController {
       Get.offAllNamed(HomeScreen.routeName);
     } else{
       Get.back();
-      showSweetToast(message: "Login Failed. Check your details and try again", isSuccess: false);
+      showSweetToast(message: "Registration Failed. Check your details and try again", isSuccess: false);
     }
   }
 

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_keys.dart';
+import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/models/product_model.dart';
 import 'package:foody/screens/cart_screen.dart';
 import 'package:foody/widgets/related_product_card.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sizer/sizer.dart';
 
 class CategoryDetailScreen extends StatefulWidget {
   final ProductModel product; 
@@ -73,9 +74,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
               right: 0,
               bottom: 0,
               child: Container(
-                // height: 500,
                 width: double.infinity,   
-                padding: EdgeInsets.symmetric(horizontal: 15),         
+                padding: EdgeInsets.symmetric(horizontal: 5.w),         
                 decoration:  BoxDecoration (
                   color:  Colors.white,
                   borderRadius:  BorderRadius.only (
@@ -96,30 +96,30 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                           borderRadius:  BorderRadius.circular(30),
                         ),                     
                         child: Text(
-                          widget.product.category.name, // 'vegetables',
+                          widget.product.category.name.substring(0,1).toUpperCase() + widget.product.category.name.substring(1), // 'vegetables',
                           style:  GoogleFonts.inter(
-                            fontSize:  15,
+                            fontSize:  11.sp,
                             fontWeight:  FontWeight.w500,
                             color:  FoodyColors.textFoodyGreen,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 3.h),
                     // Food Name Text
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        widget.product.name, // 'Fresh Carrot',
+                        widget.product.name.substring(0,1).toUpperCase() + widget.product.name.substring(1), // 'Fresh Carrot',
                         style:  GoogleFonts.inter(
-                          fontSize:  24,
+                          fontSize:  20.sp,
                           fontWeight:  FontWeight.w700,
                           height:  0.75,
                           color:  FoodyColors.textFoodyblack,
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 3.h),
                     // The Price and Kilogram
                     Row(
                       children: [
@@ -127,7 +127,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                         Text(
                           '# ${productController.formatToMoney(widget.product.discountPrice.toString())}',  // 'Rp 18,000',
                           style:  GoogleFonts.inter(
-                            fontSize:  18,
+                            fontSize:  13.sp,
                             fontWeight:  FontWeight.w700,
                             color:  FoodyColors.textFoodyGreen,
                           ),
@@ -146,7 +146,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                         Text(
                           '# ${productController.formatToMoney(widget.product.realPrice.toString())}',  // 'Rp 21,000',
                           style: GoogleFonts.inter(
-                            fontSize:  12,
+                            fontSize:  11.sp,
                             fontWeight:  FontWeight.w500,
                             color: FoodyColors.textFoodyGrey ,
                             decoration: TextDecoration.lineThrough,
@@ -154,7 +154,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 5.h),
                     // TABS 
                     DefaultTabController(
                       length: 2,
@@ -173,7 +173,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                                   'Description',
                                   textAlign:  TextAlign.center,
                                   style:  GoogleFonts.inter(
-                                    fontSize:  14,
+                                    fontSize:  12.sp,
                                     fontWeight:  FontWeight.w400,
                                     letterSpacing:  -0.2399999946,
                                     color:  tabIndex==0? FoodyColors.textFoodyGreen : null,
@@ -186,7 +186,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                                   'Nutritional facts',
                                   textAlign:  TextAlign.center,
                                   style:  GoogleFonts.inter(
-                                    fontSize:  14,
+                                    fontSize:  12.sp,
                                     fontWeight:  FontWeight.w400,
                                     letterSpacing:  -0.2399999946,
                                     color:  tabIndex==1? FoodyColors.textFoodyGreen : null,
@@ -209,7 +209,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                                   Text(
                                     widget.product.description,  // 'The carrot is a root vegetable, most commonly observed as orange . . . .',
                                     style:  GoogleFonts.inter(
-                                      fontSize:  13,
+                                      fontSize:  10.sp,
                                       fontWeight:  FontWeight.w400,
                                       height:  1.2125,
                                       letterSpacing:  0.26,
@@ -217,7 +217,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                                     ),
                                     textAlign: TextAlign.justify,
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 5.h),
                                   // Related-Product Text
                                   Align(
                                     alignment: Alignment.centerLeft,
@@ -252,14 +252,14 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                             // View For Nutritional Facts
                             Container(
                               height: 100,
-                              child: const Center(
+                              child: Center(
                                 child: Text(
                                   'Details coming soon . . . !',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: FoodyColors.textFoodyGrey,
                                     letterSpacing: 2,
-                                    fontSize: 16,
+                                    fontSize: 10.sp,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -278,8 +278,8 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
       ),
       bottomNavigationBar: Container(
         padding:  EdgeInsets.fromLTRB(30, 22, 23, 21),
-        width:  375,
-        height:  92,
+        // width:  375,
+        height:  12.h,
         decoration:  const BoxDecoration (
           color:  Colors.white,
           borderRadius:  BorderRadius.only (
@@ -306,20 +306,21 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                   });
                 }
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.remove,
                 color: FoodyColors.textFoodyGreen2,
-                size: 28,
+                size: 20.sp,
               ),
             ),
             // Number of items added
             Container(
-              margin:  EdgeInsets.fromLTRB(0, 0, 10, 0),
-              width:  49,
+              // margin:  EdgeInsets.fromLTRB(0, 0, 10, 0),
+              padding: EdgeInsets.symmetric(vertical: 2.sp, horizontal: 5.sp),
+              // width:  5.w,
               height:  double.infinity,
               decoration:  BoxDecoration (
                 color:  const Color(0x260eb177),
-                borderRadius:  BorderRadius.circular(10),
+                borderRadius:  BorderRadius.circular(5.sp),
               ),
               child: Center(
                 child: Center(
@@ -327,7 +328,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                     quantityDesired.toString(), // quantity selected/desired
                     textAlign:  TextAlign.center,
                     style:  GoogleFonts.inter(
-                      fontSize:  18,
+                      fontSize:  13.sp,
                       fontWeight:  FontWeight.w600,
                       height:  1.2125,
                       color: FoodyColors.textFoodyGreen2,
@@ -343,13 +344,13 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                   quantityDesired += 1;
                 });
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.add,
                 color: FoodyColors.textFoodyGreen2,
-                size: 28,
+                size: 20.sp,
               ),
             ),
-            SizedBox(width: 10),
+            SizedBox(width: 9.w),
             // Add To Cart Button wrapped with InkWell
             InkWell(
               onTap: () async{
@@ -370,7 +371,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                 }
               },
               child: Container(
-                width:  181,
+                width:  40.w,
                 height:  double.infinity,
                 decoration:  BoxDecoration (
                   color:  FoodyColors.textFoodyGreen2,
@@ -389,7 +390,7 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> {
                       ' Add to Cart',
                       textAlign:  TextAlign.center,
                       style:  GoogleFonts.inter(
-                        fontSize:  16,
+                        fontSize:  11.sp,
                         fontWeight:  FontWeight.w600,
                         height:  1.2125,
                         color:  Colors.white,

@@ -4,6 +4,7 @@ import 'package:foody/screens/auth/auth_option_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/header_background.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -38,12 +39,12 @@ class OnboardingScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 23,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 6.h),
               // Get Started Button
               FoodyMainButton(
                 text: 'Get Started', 
