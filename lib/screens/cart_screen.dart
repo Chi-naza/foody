@@ -154,6 +154,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 2.h),
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.5),
@@ -166,13 +167,12 @@ class _CartScreenState extends State<CartScreen> {
                           okOnPressed: (){
                             Get.back();
                             // Show bottom sheet
-                            // showFoodyBottomSheet();
-                            Get.to(PaymentScreen(orderID: 'ewjjsdmsjks'));
+                            showFoodyBottomSheet();
                           }
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        fixedSize: Size(MediaQuery.of(context).size.width, 60),
+                        fixedSize: Size(MediaQuery.of(context).size.width, 7.h),
                         backgroundColor: FoodyColors.mainColor2,
                         foregroundColor: Colors.white,
                         elevation: 15,
