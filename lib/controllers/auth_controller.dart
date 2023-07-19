@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foody/constants/foody_colors.dart';
+import 'package:foody/controllers/product_controller.dart';
 import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/data/api/helper_methods.dart';
 import 'package:foody/locals/local_data.dart';
@@ -36,6 +37,7 @@ class AuthController extends GetxController {
       Get.offNamed(OnboardingScreen.routeName);
     }
   }
+
 
 
 
@@ -81,7 +83,8 @@ class AuthController extends GetxController {
 
 
   // This function logs in the user  
-  Future<void> loginUser(String email, String password) async{   
+  Future<void> loginUser(String email, String password) async{  
+    final prodController = Get.find<ProductController>(); 
 
     // progress dialog
     showProgressDialog(message: "Logging in; please wait . . .");
@@ -110,6 +113,12 @@ class AuthController extends GetxController {
       showSweetToast(message: "Login successful !");
       // Preview Data stored in the Locals
       await showUserDetailsInLocals();
+      // Get products and product related data
+      await prodController.fetchAllGroceryProducts();
+      await prodController.fetchAllProductCategories();
+      await prodController.fetchAllOrderedProducts();
+      // cart
+      prodController.retrieveCartItemsFromLocals();
       // Go to homescreen 
       Get.offAllNamed(HomeScreen.routeName);
 
