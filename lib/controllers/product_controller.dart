@@ -58,11 +58,12 @@ class ProductController extends GetxController {
       // call a function to fetch product categories
       await fetchAllProductCategories();
 
+       // Fetching ordered items of the current user
+      await fetchAllOrderedProducts();
+
       // Retrieve cart items from locals
       retrieveCartItemsFromLocals();
-
-      // Fetching ordered items of the current user
-      fetchAllOrderedProducts();
+     
     }else {
       if(kDebugMode) print("FAILED TO FETCH PRODUCTS . . .");
     }
@@ -247,8 +248,8 @@ void retrieveCartItemsFromLocals() async {
         for(var item in order.items){
           // Looping through allProductsList
           for(var prod in allGroceryProductsList){
-            // if orderedProduct ID equals productID in allProductsList
-            if(item.id == prod.id){
+            // if orderedProduct ID equals productID in allProductsList. "item.product" gives the product ID
+            if(item.product == prod.id){
               var orderRefurbishItem = OrderRefurbishedModel(
                 orderID: order.id, 
                 price: item.price, 
@@ -275,6 +276,8 @@ void retrieveCartItemsFromLocals() async {
 
   // This methods helps the user to make an order
   Future<void> makeAnOrder(CreateOrderModel createOrderModel) async {
+    Get.back(); // closing bottom sheet
+
     // progress dialog
     showProgressDialog(message: "Creating your order . . .");
 
@@ -284,10 +287,10 @@ void retrieveCartItemsFromLocals() async {
       body: createOrderModel.toJson()
     );
 
-    print("TEST STATUS CODE: ${response.statusCode}");
-    print("TEST STATUS TEXT: ${response.statusText}");
+    if(kDebugMode)print("TEST STATUS CODE: ${response.statusCode}");
+    if(kDebugMode)print("TEST STATUS TEXT: ${response.statusText}");
 
-    if(response.statusCode==201){
+    if(response.statusCode==200){
       // saving details to locals
       await authController.saveUserDetailsInLocals(
         orderID: response.body["order_id"],
@@ -300,6 +303,10 @@ void retrieveCartItemsFromLocals() async {
       await authController.showUserDetailsInLocals();
       // Go to payment screen
       Get.to(PaymentScreen(orderID: response.body["order_id"].toString()));
+
+      // clear cart items upon order success
+      cartProductsList.clear();
+      await authController.clearCartDataUponOrder();
     } else{
       Get.back();
       authController.showSweetToast(message: "Order Failed. Please try again", isSuccess: false);

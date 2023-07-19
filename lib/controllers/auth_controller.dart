@@ -26,7 +26,7 @@ class AuthController extends GetxController {
 
   // Start Foody App
   Future<void> startFoodyApp() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 4));
     // Checking user status
     bool isLoggedIn = await isUserLoggedIn(); 
 
@@ -127,6 +127,16 @@ class AuthController extends GetxController {
       showSweetToast(message: "Login Failed. Check your details and try again", isSuccess: false);
     }
   }
+  // This function logs in the user  from backedn
+  Future<Response> logoutUserFromBackend() async{  
+
+    Response response = await HelperAPIMethods.postData(
+      uri: FoodyAPI.BASE_URL + FoodyAPI.logoutEndpoint,
+      withHeader: true,
+      body: {}
+    );
+    return response;
+  }
 
 
   // Function which saves each user's number and password locally
@@ -189,14 +199,34 @@ class AuthController extends GetxController {
     return true;
   }
 
+  // Function that clears authentication data
+   Future<bool> clearCartDataUponOrder() async {
+    final sharedPref = await SharedPreferences.getInstance();
+    sharedPref.remove(FoodyLocals.CART);
+    if(kDebugMode) print("CART DATA CLEARED SUCCESSFULLY");
+    
+    return true;
+  }
+
 
 
   // Functions that logs out the user
   void logoutUser() async {
-    bool signedOut = await clearSharedData();
-    if(signedOut){
-      Get.offAllNamed(LoginScreen.routeName);
+    // obtaining response from the main logout method
+    var response = await logoutUserFromBackend();
+
+    // checking if logout is successful
+    if(response.statusCode==200){
+      bool signedOut = await clearSharedData();
+      if(signedOut){
+        showSweetToast(message: response.body["detail"].toString());
+        Future.delayed(const Duration(seconds: 2));
+        Get.offAllNamed(LoginScreen.routeName);
+      }      
+    }else{
+      showSweetToast(message: "Logout failed. \nError: ${response.statusText}");
     }
+
   }
 
 

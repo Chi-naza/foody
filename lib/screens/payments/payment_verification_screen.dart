@@ -63,12 +63,13 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
               focusedBorderColor: accentPurpleColor,
               showFieldAsBox: false,
               borderWidth: 4.0,
-              onCodeChanged: (String code) {
-                setState(() {
-                  otpCode = code;
+              onCodeChanged: (String code) {},
+              onSubmit: (String verificationCode) {
+                 setState(() {
+                  otpCode = verificationCode;
+                  print(otpCode);
                 });
-              },
-              onSubmit: (String verificationCode) {}, // end onSubmit
+              }, // end onSubmit
             ),
             Spacer(),
             Center(

@@ -261,6 +261,7 @@ void requestCardPinBottomSheet() {
                   var pin = cardPinController.text.trim();
                   var expMonth = expiryDate.substring(0,2);
                   var expYear = expiryDate.substring(3,5);
+                  var newCardNumber = cardNumber.removeAllWhitespace; // removing all whitespaces
 
                   if(kDebugMode)print("$expMonth , $expYear ($expiryDate)");
 
@@ -268,7 +269,7 @@ void requestCardPinBottomSheet() {
                     // calling our function from Payment controller
                     paymentController.createPaymentReference(
                       orderID: widget.orderID, 
-                      cardNumber: cardNumber, 
+                      cardNumber: newCardNumber, 
                       CVV: cvvCode, 
                       expMonth: expMonth, 
                       expYear: expYear, 

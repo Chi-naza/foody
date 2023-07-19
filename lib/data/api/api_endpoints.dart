@@ -72,7 +72,7 @@ class FoodyAPI {
 
 
   // MAKING ORDERS
-  static const String orderProductsEndpoint = "/order/create/"; // POST
+  static const String orderProductsEndpoint = "/order/create"; // POST
 
   static const String orderListsEndpoint = "/order/";   // GET
 
@@ -96,15 +96,15 @@ class FoodyAPI {
 
   // PAYMENT
   static String paymentFormEndpoint(String orderID){
-    return "/payment/form/$orderID/"; // POST
+    return "/payment/form/$orderID"; // POST
   }
 
   static String validatePaymentEndpoint(String orderID, String flwRef){
-    return "/payment/validate/$orderID/$flwRef/"; // POST
+    return "/payment/validate/$orderID/$flwRef"; // POST
   }
 
   static String verifyPaymentEndpoint(String orderID){
-    return "/payment/verify/$orderID/"; // GET
+    return "/payment/verify/$orderID"; // GET
   }
 
 

@@ -28,7 +28,7 @@ class _OrderedProductsScreenState extends State<OrderedProductsScreen> {
         child: SingleChildScrollView(          
           child: Obx(() {
             // if cart is empty
-              return productController.allOrderedProductsList.isEmpty? Column(
+              return productController.allOrdersList.isEmpty? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height*0.5),
@@ -59,11 +59,11 @@ class _OrderedProductsScreenState extends State<OrderedProductsScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
                   // List of ORDER ITEMS here
                   SizedBox(
                     height: MediaQuery.of(context).size.height,
                     child: ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         var orderedItem = productController.allOrdersList[index];
                         var date = orderedItem.createdAt.substring(0,10);
