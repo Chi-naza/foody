@@ -118,8 +118,7 @@ class _CartScreenState extends State<CartScreen> {
                                 quantity: cartItem.quantity,
                                 totalPrice: productController
                                     .formatToMoney(total.toString()),
-                                image:
-                                    FoodyAPI.BASE_URL + cartItem.product.image,
+                                image: cartItem.product.image,
                               ),
                             );
                           },
@@ -286,6 +285,7 @@ class _CartScreenState extends State<CartScreen> {
                 text: 'phone number',
                 hintText: 'your phone number',
                 keyboardType: TextInputType.phone,
+                isDoneTypeing: true,
                 inputController: phoneNumberController,
               ),
               const SizedBox(height: 30),
@@ -412,10 +412,11 @@ class _CartScreenState extends State<CartScreen> {
                       state.isEmpty ||
                       phone.isEmpty) {
                     authController.showSweetToast(
-                        message:
-                            "Wrong or empty fields. Kindly fill it properly and try agaain",
-                        isSuccess: false);
-                  } else {
+                      message:
+                          "Wrong or empty fields. Kindly fill it properly and try agaain",
+                      isSuccess: false,
+                    );
+                  } else if (3 > 4) {
                     List<CartModel> cartList = [];
 
                     for (var co in productController.cartProductsList) {
@@ -465,6 +466,11 @@ class _CartScreenState extends State<CartScreen> {
                         isFlutterWave: true,
                       );
                     }
+                  } else {
+                    authController.showSweetToast(
+                      message: "This payment option is no longer available",
+                      isSuccess: false,
+                    );
                   }
                 },
                 backgroundColor: Colors.redAccent,

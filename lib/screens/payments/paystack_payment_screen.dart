@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/screens/main_pages/home_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
+import 'package:foody/widgets/option_dialog.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -72,32 +73,32 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            leading: Obx(() {
-              return isPaymentVerified.value
-                  ? const Icon(Icons.check, color: Colors.white)
-                  : IconButton(
-                      icon:
-                          const Icon(Icons.arrow_back_ios, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(),
-                    );
-            }),
-            backgroundColor: Colors.green[400],
-            elevation: 0,
-            title: Text(
-              'Pay for your orders',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
+        appBar: AppBar(
+          leading: Obx(() {
+            return isPaymentVerified.value
+                ? const Icon(Icons.check, color: Colors.white)
+                : IconButton(
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                    onPressed: () => Get.offAll(HomeScreen.routeName),
+                  );
+          }),
+          backgroundColor: Colors.green[400],
+          elevation: 0,
+          title: Text(
+            'Pay for your orders',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
           ),
-          body: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: WebViewWidget(controller: myWebViewController),
-          ),
-          bottomNavigationBar: StreamBuilder(stream: () async* {
+        ),
+        body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: WebViewWidget(controller: myWebViewController),
+        ),
+        bottomNavigationBar: StreamBuilder(
+          stream: () async* {
             bool paymentVerified = false;
 
             // This while loop continues to run the verification API until the users payment is confirmed, then it will stop
@@ -117,7 +118,8 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
             //     break;
             //   }
             // }
-          }(), builder: (context, snapshot) {
+          }(),
+          builder: (context, snapshot) {
             if (snapshot.hasData) {
               if (kDebugMode)
                 print(
@@ -150,14 +152,22 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.sp),
                 child: FoodyMainButton(
-                    text: 'Click to Verify Payment',
+                    text: 'Done', //'Click to Verify Payment',
                     fontSize: 13.5.sp,
                     onTapped: () {
-                      Get.toNamed(HomeScreen.routeName);
+                      showChoiceDialog(
+                          title: 'Done with Payment?',
+                          message: 'Continue shopping',
+                          okOnPressed: () {
+                            Get.offAllNamed(HomeScreen.routeName);
+                          });
                     }),
               );
+              // return Container();
             }
-          })),
+          },
+        ),
+      ),
     );
   }
 }

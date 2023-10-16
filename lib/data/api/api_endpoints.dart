@@ -8,10 +8,10 @@ class FoodyAPI {
 
   static const String registrationEndpoint = "/auth/registration/"; // POST
 
-  static const String passwordResetEndpoint = "/auth/password/reset/"; // POST
+  static const String passwordResetEndpoint = "/user/password_reset/"; // POST
 
   static const String passwordResetConfirmEndpoint =
-      "/auth/password/reset/confirm/"; // POST
+      "/user/confirm_password/"; // POST
 
   static const String userDetailsEndpoint = "/auth/user/"; // GET
   static const String userUpdateDetailsEndpoint = "/auth/user/"; // PUT

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
 import 'package:foody/controllers/product_controller.dart';
 import 'package:foody/data/api/api_endpoints.dart';
+import 'package:foody/models/product_model.dart';
 import 'package:foody/screens/main_pages/category_list_screen.dart';
 import 'package:foody/screens/orders/ordered_products_screen.dart';
 import 'package:foody/widgets/header_background.dart';
@@ -21,7 +22,6 @@ class HomeScreenBody extends StatefulWidget {
 }
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
-
   static const _images = [
     FoodyImages.carouselImage,
     FoodyImages.carouselImage,
@@ -35,9 +35,10 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     FoodyImages.speedDial2,
   ];
 
-
   // Controllers
   ProductController productController = Get.find<ProductController>();
+
+  var availableCategories = <FullCategoryModel>[].obs;
 
   @override
   void initState() {
@@ -46,6 +47,23 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       precache();
     });
+    productController.fetchAllGroceryProducts();
+    runSearchFilter('');
+  }
+
+  void runSearchFilter(String enteredKeyword) {
+    List<FullCategoryModel> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = productController.allCategoryFullList;
+    } else {
+      results = productController.allCategoryFullList
+          .where((cat) =>
+              cat.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    // update our list
+    availableCategories.value = results;
   }
 
   @override
@@ -58,7 +76,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
           foodyTextFontSize: 30,
           children: Column(
             children: [
-              SizedBox(height: 30),              
+              SizedBox(height: 30),
               // The Search Section
               Row(
                 children: [
@@ -66,87 +84,91 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   // The Search Field
                   Expanded(
                     child: Container(
-                      padding:  const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                      decoration:  BoxDecoration (
-                        color:  Color(0xfff2f2f2),
-                        borderRadius:  BorderRadius.circular(15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Color(0xfff2f2f2),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: TextFormField(
                         cursorColor: FoodyColors.mainColor,
                         keyboardType: TextInputType.text,
                         style: GoogleFonts.inter(
-                          fontSize:  14,
-                          fontWeight:  FontWeight.w400,
-                          height:  1.2125,
-                          color:  Colors.black87,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.2125,
+                          color: Colors.black87,
                         ),
                         decoration: InputDecoration(
-                          hintText: 'Search for fruits, vegetables, groceries . . .',
+                          hintText:
+                              'Search for fruits, vegetables, groceries . . .',
                           hintStyle: GoogleFonts.inter(
-                            fontSize:  15,
-                            fontWeight:  FontWeight.w400,
-                            height:  1.2125,
-                            color:  const Color(0xffbdbdbd),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            height: 1.2125,
+                            color: const Color(0xffbdbdbd),
                           ),
                           prefixIcon: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.search,
                             ),
-                            onPressed: (){
-                              print('Search Pressed');                              
+                            onPressed: () {
+                              return;
                             },
                           ),
-                          border: InputBorder.none,                        
+                          border: InputBorder.none,
                         ),
+                        onChanged: (value) {
+                          runSearchFilter(value);
+                        },
                       ),
                     ),
                   ),
                   // Back Icon
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.list_alt,
                       color: Colors.white,
                       size: 28,
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       Get.toNamed(OrderedProductsScreen.routeName);
                     },
                   ),
                   // Cart Icon
                   IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.notifications_none,
                       color: Colors.white,
                       size: 28,
                     ),
-                    onPressed: (){
+                    onPressed: () {
                       print('Pressed Notification Icon');
                     },
                   ),
                 ],
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               // LOCATION text
               Row(
                 children: [
                   Container(
                     child: Row(
-                      crossAxisAlignment:  CrossAxisAlignment.center,
-                      children:  [
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         IconButton(
-                          onPressed: (){}, 
-                          icon:Icon(
-                            Icons.location_on_outlined,
-                            color: Colors.white,
-                          )
-                        ),
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.location_on_outlined,
+                              color: Colors.white,
+                            )),
                         Text(
                           'Sent to:',
-                          style:  GoogleFonts.inter(
-                            fontSize:  10.sp,
-                            fontWeight:  FontWeight.w400,
-                            letterSpacing:  0.3000000119,
-                            color:  Color(0xffffffff),
+                          style: GoogleFonts.inter(
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0.3000000119,
+                            color: Color(0xffffffff),
                           ),
                         ),
                       ],
@@ -160,17 +182,17 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     child: Text(
                       'Enugu Baraji Residence No.5, RT 05/hdjk dhhd',
                       overflow: TextOverflow.ellipsis,
-                      style:  GoogleFonts.inter(
-                        fontSize:  10.sp,
-                        fontWeight:  FontWeight.w600,
-                        color:  Color(0xffffffff),
+                      style: GoogleFonts.inter(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xffffffff),
                       ),
                     ),
                   ),
                   // arrow down icon
                   IconButton(
-                    onPressed: (){}, 
-                    icon: Icon(
+                    onPressed: () {},
+                    icon: const Icon(
                       Icons.keyboard_arrow_down_rounded,
                       color: Colors.white,
                     ),
@@ -178,7 +200,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                 ],
               ),
               SizedBox(height: 20),
-              // Carousel HERE   
+              // Carousel HERE
               Container(
                 height: 230,
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -190,7 +212,9 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                         height: 210,
                         child: ScrollPageView(
                           controller: ScrollPageController(),
-                          children: _images.map((image) => _imageView(image)).toList(),
+                          children: _images
+                              .map((image) => _imageView(image))
+                              .toList(),
                         ),
                       ),
                     ),
@@ -202,44 +226,59 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left:10),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     'Categories',
-                    style:  GoogleFonts.inter(
-                      fontSize:  19,
-                      fontWeight:  FontWeight.w700,
-                      letterSpacing:  0.3000000119,
-                      color:  FoodyColors.textFoodyblack,
+                    style: GoogleFonts.inter(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.3000000119,
+                      color: FoodyColors.textFoodyblack,
                     ),
                   ),
                 ),
-              ),                
+              ),
               // List of Categories
               Obx(() {
-                  return Container(
-                    height: 150,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: productController.allCategoryFullList.length,
-                      separatorBuilder: (context, index) => SizedBox(),
-                      itemBuilder: (context, index) {
-                        var catItem = productController.allCategoryFullList[index];
-                        return InkWell(
-                          onTap: (){
-                            Get.toNamed(CategoryListScreen.routeName);
-                          },
-                          child: CategoryItemWidget(
-                            itemName: catItem.name.substring(0,1).toUpperCase() + catItem.name.substring(1), 
-                            itemImage: FoodyAPI.BASE_URL + catItem.image,
+                return availableCategories.isEmpty
+                    ? Container(
+                        child: Text(
+                          'No item found',
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.3000000119,
+                            color: FoodyColors.textFoodyblack,
                           ),
-                        );
-                      },
-                    ),
-                  );
-                }
-              ),
+                        ),
+                      )
+                    : Container(
+                        height: 150,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: availableCategories
+                              .length, //productController.allCategoryFullList.length,
+                          separatorBuilder: (context, index) => SizedBox(),
+                          itemBuilder: (context, index) {
+                            var catItem = availableCategories[index];
+                            //productController.allCategoryFullList[index];
+                            return InkWell(
+                              onTap: () {
+                                Get.toNamed(CategoryListScreen.routeName);
+                              },
+                              child: CategoryItemWidget(
+                                itemName:
+                                    catItem.name.substring(0, 1).toUpperCase() +
+                                        catItem.name.substring(1),
+                                itemImage: catItem.image,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+              }),
               // Divider HERE
-              const Divider(), 
+              const Divider(),
               SizedBox(height: 2.h),
               // Special Dial & See More Section
               Container(
@@ -250,27 +289,28 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     // Text Special Deal
                     Text(
                       'Special Deal',
-                      style:  GoogleFonts.inter(
-                        fontSize:  19,
-                        fontWeight:  FontWeight.w700,
-                        color:  FoodyColors.textFoodyblack,
+                      style: GoogleFonts.inter(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w700,
+                        color: FoodyColors.textFoodyblack,
                       ),
                     ),
                     InkWell(
-                      onTap: (){
-                        Get.toNamed(CategoryListScreen.routeName); // See more items
+                      onTap: () {
+                        Get.toNamed(
+                            CategoryListScreen.routeName); // See more items
                       },
                       child: Row(
                         children: [
                           // Text 'See More'
                           Text(
                             'See more',
-                            textAlign:  TextAlign.center,
-                            style:  GoogleFonts.inter(
-                              fontSize:  13,
-                              fontWeight:  FontWeight.w500,
-                              letterSpacing:  -0.0780000016,
-                              color:  FoodyColors.textFoodyGreen,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.0780000016,
+                              color: FoodyColors.textFoodyGreen,
                             ),
                           ),
                           // Arrow Icon
@@ -293,25 +333,25 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.symmetric(horizontal: 3.w),
                   itemCount: 3,
-                  itemBuilder: (context, index){
+                  itemBuilder: (context, index) {
                     return Container(
-                      width:  35.w,
-                      height:  130.h,
+                      width: 35.w,
+                      height: 130.h,
                       child: Container(
-                        decoration:  BoxDecoration (
-                          borderRadius:  BorderRadius.circular(10),
-                          color:  Color(0xffc4c4c4),
-                          image:  DecorationImage (
-                            fit:  BoxFit.cover,
-                            image:  AssetImage (_speedDialImages[index]),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xffc4c4c4),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(_speedDialImages[index]),
                           ),
                         ),
-                      ), 
-                    );  
+                      ),
+                    );
                   },
                   separatorBuilder: (context, index) => SizedBox(width: 15),
                 ),
-              ),    
+              ),
             ],
           ),
         ),

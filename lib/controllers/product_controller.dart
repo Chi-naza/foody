@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:foody/constants/cart_helper_methods.dart';
 import 'package:foody/controllers/auth_controller.dart';
@@ -279,6 +277,7 @@ class ProductController extends GetxController {
       );
 
       if (kDebugMode) print("CREATE ORDER RESPONSE: ${response.body}");
+      if (kDebugMode) print("ORDER ID: ${response.body["order_id"]}");
 
       Get.back();
       // Preview Data stored in the Locals

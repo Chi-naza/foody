@@ -20,11 +20,12 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   final authController = Get.find<AuthController>();
+
+  bool hideText = true;
 
   @override
   void dispose() {
@@ -32,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     passwordController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +46,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 children: [
                   Text(
                     'Register',
-                    style:  GoogleFonts.inter(
-                      fontSize:  27.sp,
-                      fontWeight:  FontWeight.w700,
-                      height:  1.2058823529,
-                      letterSpacing:  0.3740000129,
-                      color:  Color(0xffffffff),
+                    style: GoogleFonts.inter(
+                      fontSize: 27.sp,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2058823529,
+                      letterSpacing: 0.3740000129,
+                      color: Color(0xffffffff),
                     ),
                   ),
                   SizedBox(width: 15.w),
@@ -58,84 +59,100 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Image.asset(FoodyImages.manIntro),
                 ],
               ),
-              SizedBox(height: 20),              
+              SizedBox(height: 20),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Column(
                   children: [
                     // Email Section
                     TextFieldWidget(
-                      text: 'email', 
+                      text: 'email',
                       hintText: 'yourmail@mail.com',
-                      keyboardType: TextInputType.emailAddress,   
-                      inputController: emailController,                  
+                      keyboardType: TextInputType.emailAddress,
+                      inputController: emailController,
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     // Email Section
                     TextFieldWidget(
-                      text: 'password', 
+                      text: 'password',
                       hintText: 'your password here',
                       keyboardType: TextInputType.visiblePassword,
-                      isPassword: true,
+                      isPassword: hideText,
+                      isDoneTypeing: true,
                       inputController: passwordController,
-                    ),              
+                      suffixIcon: IconButton(
+                        onPressed: () => setState(() {
+                          hideText = !hideText;
+                        }),
+                        icon: hideText
+                            ? Icon(
+                                Icons.visibility_off,
+                                color: FoodyColors.mainColor,
+                              )
+                            : Icon(
+                                Icons.visibility,
+                                color: Colors.red,
+                              ),
+                      ),
+                    ),
                   ],
                 ),
-              ),              
+              ),
               SizedBox(height: 50),
               // Register Button
               FoodyMainButton(
-                text: 'Register', 
-                width: 86.w,
-                textColor: Colors.white,
-                backgroundColor: FoodyColors.mainColor,
-                onTapped: (){                  
-                  var email = emailController.text.trim();
-                  var pswd = passwordController.text.trim(); 
-                  // if form is valid, then proceed with signIn
-                  bool emailValid = authController.validateTextInputData(text: email, isEmail: true);
-                  if(!emailValid) return;
-                  bool pswdValid = authController.validateTextInputData(text: pswd, isPassword: true);
-                  if(!pswdValid) return;
-                  
-                  // calling registration function if form is valid                       
-                  if(emailValid && pswdValid){
-                    authController.registerUser(email, pswd);
-                  }
-                }
-              ),
+                  text: 'Register',
+                  width: 86.w,
+                  textColor: Colors.white,
+                  backgroundColor: FoodyColors.mainColor,
+                  onTapped: () {
+                    var email = emailController.text.trim();
+                    var pswd = passwordController.text.trim();
+                    // if form is valid, then proceed with signIn
+                    bool emailValid = authController.validateTextInputData(
+                        text: email, isEmail: true);
+                    if (!emailValid) return;
+                    bool pswdValid = authController.validateTextInputData(
+                        text: pswd, isPassword: true);
+                    if (!pswdValid) return;
+
+                    // calling registration function if form is valid
+                    if (emailValid && pswdValid) {
+                      authController.registerUser(email, pswd);
+                    }
+                  }),
               SizedBox(height: 20),
               Row(
-                mainAxisAlignment:  MainAxisAlignment.center,
-                children:  [
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Center(
                     child: Container(
-                      margin:  EdgeInsets.fromLTRB(0, 0, 4, 0),
+                      margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
                       child: Text(
                         "Already have an account?",
-                        textAlign:  TextAlign.center,
-                        style:  GoogleFonts.inter(
-                          fontSize:  9.sp,
-                          fontWeight:  FontWeight.w400,
-                          height:  1.5,
-                          color:  FoodyColors.textFoodyGreen,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 9.sp,
+                          fontWeight: FontWeight.w400,
+                          height: 1.5,
+                          color: FoodyColors.textFoodyGreen,
                         ),
                       ),
                     ),
                   ),
                   Center(
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(LoginScreen.routeName);
                       },
                       child: Text(
                         'Login Here',
-                        textAlign:  TextAlign.center,
-                        style:  GoogleFonts.inter(
-                          fontSize:  10.sp,
-                          fontWeight:  FontWeight.w700,
-                          height:  1.5,
-                          color:  Color(0xff0eb176),
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w700,
+                          height: 1.5,
+                          color: Color(0xff0eb176),
                         ),
                       ),
                     ),

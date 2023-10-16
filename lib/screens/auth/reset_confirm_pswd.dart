@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_colors.dart';
-import 'package:foody/constants/foody_images.dart';
 import 'package:foody/controllers/auth_controller.dart';
-import 'package:foody/screens/auth/registration_screen.dart';
-import 'package:foody/screens/auth/reset_pswd_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/header_background.dart';
 import 'package:foody/widgets/textfield_widget.dart';
@@ -11,17 +8,17 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ConfirmPswdResetScreen extends StatefulWidget {
+  const ConfirmPswdResetScreen({super.key});
 
-  static const String routeName = '/login';
+  static const String routeName = '/confirm-pswd-reset';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ConfirmPswdResetScreen> createState() => _ConfirmPswdResetScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
+class _ConfirmPswdResetScreenState extends State<ConfirmPswdResetScreen> {
+  final otpController = TextEditingController();
   final passwordController = TextEditingController();
 
   final authController = Get.find<AuthController>();
@@ -30,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    otpController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -40,15 +37,17 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: HeaderBackgroundWidget(
+          heightBtwTextnChildren: 5.h,
+          containerSize: 35.h,
           children: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Login',
+                    'Complete\nPassword Reset',
                     style: GoogleFonts.inter(
-                      fontSize: 27.sp,
+                      fontSize: 23.sp,
                       fontWeight: FontWeight.w700,
                       height: 1.2058823529,
                       letterSpacing: 0.3740000129,
@@ -57,26 +56,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(width: 15.w),
                   // Image at Login
-                  Image.asset(FoodyImages.manIntro),
+                  // Image.asset(FoodyImages.manIntro),
                 ],
               ),
-              SizedBox(height: 7.h),
+              SizedBox(height: 14.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 4.w),
                 child: Column(
                   children: [
                     // Email Section
                     TextFieldWidget(
-                      text: 'email',
-                      hintText: 'yourmail@mail.com',
-                      keyboardType: TextInputType.emailAddress,
-                      inputController: emailController,
+                      text: 'verification code',
+                      hintText: 'eg. 7373',
+                      keyboardType: TextInputType.number,
+                      inputController: otpController,
                     ),
                     SizedBox(height: 4.h),
                     // Email Section
                     TextFieldWidget(
-                      text: 'password',
-                      hintText: 'your password here',
+                      text: 'new Password',
+                      hintText: 'your new password here',
                       keyboardType: TextInputType.visiblePassword,
                       isPassword: hideText,
                       isDoneTypeing: true,
@@ -99,48 +98,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 4.h),
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.fromLTRB(255, 0, 2, 18),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(const ResetPswdScreen());
-                    },
-                    child: Text(
-                      'Forgot Password',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        height: 1.8,
-                        color: FoodyColors.textFoodyGreen,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 3.h),
+              SizedBox(height: 7.h),
               // Login Button
               FoodyMainButton(
-                  text: 'Login',
+                  text: 'Complete Reset',
                   width: 86.w,
                   textColor: Colors.white,
                   backgroundColor: FoodyColors.mainColor,
                   onTapped: () {
-                    var email = emailController.text.trim();
+                    var otp = otpController.text.trim();
                     var pswd = passwordController.text.trim();
-                    // if form is valid, then proceed with signIn
-                    bool emailValid = authController.validateTextInputData(
-                        text: email, isEmail: true);
-                    if (!emailValid) return;
+                    // if form is valid, then proceed reset password completion
+                    bool otpValid =
+                        authController.validateTextInputData(text: otp);
+                    if (!otpValid) return;
                     bool pswdValid = authController.validateTextInputData(
                         text: pswd, isPassword: true);
                     if (!pswdValid) return;
 
-                    // calling registration function if form is valid
-                    if (emailValid && pswdValid) {
-                      authController.loginUser(email, pswd);
+                    // calling reset password complete function if form is valid
+                    if (otpValid && pswdValid) {
+                      authController.completePswdReset(newPswd: pswd, otp: otp);
                     }
                   }),
               SizedBox(height: 20),
@@ -154,30 +132,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
                         child: Text(
-                          "Don't have an account?",
+                          "Complete the reset password process",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.inter(
                             fontSize: 9.sp,
                             fontWeight: FontWeight.w400,
                             height: 1.5,
                             color: FoodyColors.textFoodyGreen,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          Get.toNamed(RegistrationScreen.routeName);
-                        },
-                        child: Text(
-                          'Register',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w700,
-                            height: 1.5,
-                            color: Color(0xff0eb176),
                           ),
                         ),
                       ),
