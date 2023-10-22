@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
+import 'package:foody/controllers/delivery_controller.dart';
 import 'package:foody/controllers/product_controller.dart';
 import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/models/product_model.dart';
@@ -143,7 +144,17 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       size: 28,
                     ),
                     onPressed: () {
-                      print('Pressed Notification Icon');
+                      // DeliveryController deliveryController =
+                      //     Get.put(DeliveryController());
+                      // deliveryController.orderBike(
+                      //     firstName: "Chinaza",
+                      //     lastName: "Ugwuoke",
+                      //     itemDescription: "Ofe Onugbu",
+                      //     address: "UNN gate",
+                      //     city: "Nsukka",
+                      //     state: "Enugu",
+                      //     phoneNum: "09039474848");
+                      // print('Pressed Notification Icon');
                     },
                   ),
                 ],

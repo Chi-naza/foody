@@ -75,7 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     // Email Section
                     TextFieldWidget(
                       text: 'password',
-                      hintText: 'your password here',
+                      hintText: '1 uppercase, 1 lowercase, a number & symbol',
                       keyboardType: TextInputType.visiblePassword,
                       isPassword: hideText,
                       isDoneTypeing: true,
@@ -98,7 +98,90 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 50),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Opacity(
+                  opacity: 0.5,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 5.w, top: 2.h),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: Text(
+                            "Password Must Have:",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w900,
+                              height: 1.5,
+                              color: FoodyColors.textFoodyGreen,
+                            ),
+                          ),
+                        ),
+                        // uppercase
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: Text(
+                            "1 Uppercase letter",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5,
+                              color: FoodyColors.textFoodyGreen,
+                            ),
+                          ),
+                        ),
+                        // lower case
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: Text(
+                            "1 Lowercase letter",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5,
+                              color: FoodyColors.textFoodyGreen,
+                            ),
+                          ),
+                        ),
+                        // 1 Number
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: Text(
+                            "1 Number",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5,
+                              color: FoodyColors.textFoodyGreen,
+                            ),
+                          ),
+                        ),
+                        // 1 special character
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          child: Text(
+                            "1 Special character",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.inter(
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5,
+                              color: FoodyColors.textFoodyGreen,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 50),
               // Register Button
               FoodyMainButton(
                   text: 'Register',
@@ -108,17 +191,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onTapped: () {
                     var email = emailController.text.trim();
                     var pswd = passwordController.text.trim();
+
                     // if form is valid, then proceed with signIn
                     bool emailValid = authController.validateTextInputData(
                         text: email, isEmail: true);
                     if (!emailValid) return;
+
                     bool pswdValid = authController.validateTextInputData(
                         text: pswd, isPassword: true);
                     if (!pswdValid) return;
 
+                    // more pswd check
+                    if (!authController.validateUserPassword(pswd)) {
+                      authController.showSweetToast(
+                        message: "Password is not strong enough.",
+                        isSuccess: false,
+                      );
+                      return;
+                    }
+
                     // calling registration function if form is valid
                     if (emailValid && pswdValid) {
-                      authController.registerUser(email, pswd);
+                      // authController.registerUser(email, pswd);
+                      print('Yes');
                     }
                   }),
               SizedBox(height: 20),

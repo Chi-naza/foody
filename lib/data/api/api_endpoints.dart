@@ -21,6 +21,7 @@ class FoodyAPI {
 
   // DELIVERY DETAILS
   static const String deliveredProductsListEndpoint = "/delivery/"; // GET
+  static const String createBikeEndpoint = "/delivery/create"; // POST
 
   static String deliveryDetailOfProductEndpoint(String deliveryID) {
     return "/delivery/$deliveryID/"; // GET

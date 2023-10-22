@@ -29,6 +29,7 @@ class ProductController extends GetxController {
   @override
   void onReady() {
     fetchAllGroceryProducts();
+    fetchAllOrderedProducts();
     super.onReady();
   }
 
@@ -256,7 +257,8 @@ class ProductController extends GetxController {
   // This methods helps the user to make an order
   Future<void> makeAnOrder(
       {required CreateOrderModel createOrderModel,
-      required bool isFlutterWave}) async {
+      required bool isFlutterWave,
+      required bool isHomeDelPicked}) async {
     Get.back(); // closing bottom sheet
 
     // progress dialog
@@ -287,7 +289,10 @@ class ProductController extends GetxController {
         // Go to payment screen
         Get.to(PaymentScreen(orderID: response.body["order_id"].toString()));
       } else {
-        makePaystackPayment(response.body["order_id"].toString());
+        makePaystackPayment(
+          orderID: response.body["order_id"].toString(),
+          isHomeDel: isHomeDelPicked,
+        );
       }
 
       // clear cart items upon order success
@@ -301,7 +306,8 @@ class ProductController extends GetxController {
   }
 
   // This makes a payment for the Paystack
-  Future<void> makePaystackPayment(String orderID) async {
+  Future<void> makePaystackPayment(
+      {required String orderID, required bool isHomeDel}) async {
     Get.back(); // closing bottom sheet
 
     Response response = await HelperAPIMethods.postData(
@@ -326,7 +332,12 @@ class ProductController extends GetxController {
       if (kDebugMode) print("URL: $url");
 
       // Go to payment screen
-      Get.to(PaystackPaymentScreen(subPaymentUrl: url, ref: reference));
+      Get.to(PaystackPaymentScreen(
+        subPaymentUrl: url,
+        ref: reference,
+        isHomeDeliveryPicked: isHomeDel,
+        orderID: orderID,
+      ));
     } else {
       Get.back();
       authController.showSweetToast(

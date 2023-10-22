@@ -5,17 +5,15 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/controllers/payment_controller.dart';
-import 'package:foody/screens/payments/payment_verification_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/textfield_widget.dart';
 import 'package:get/get.dart';
-
 
 class PaymentScreen extends StatefulWidget {
   final String orderID;
 
   const PaymentScreen({super.key, required this.orderID});
-    
+
   @override
   State<StatefulWidget> createState() {
     return PaymentScreenState();
@@ -23,7 +21,6 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class PaymentScreenState extends State<PaymentScreen> {
-
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -35,14 +32,13 @@ class PaymentScreenState extends State<PaymentScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
-   // Text Controllers
+  // Text Controllers
   final cardPinController = TextEditingController();
 
   // authController instance
   final authController = Get.find<AuthController>();
   // paymentController instance
-  final paymentController =  Get.put(PaymentController());
+  final paymentController = Get.put(PaymentController());
 
   @override
   void initState() {
@@ -94,8 +90,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                 // backgroundImage:
                 //     useBackgroundImage ? 'assets/card_bg.png' : null,
                 isSwipeGestureEnabled: true,
-                onCreditCardWidgetChange:
-                    (CreditCardBrand creditCardBrand) {},
+                onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
                 customCardTypeIcons: <CustomCardTypeIcon>[
                   // CustomCardTypeIcon(
                   //   cardType: CardType.mastercard,
@@ -156,7 +151,7 @@ class PaymentScreenState extends State<PaymentScreen> {
                           labelText: 'Card Holder',
                         ),
                         onCreditCardModelChange: onCreditCardModelChange,
-                      ),                     
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -209,7 +204,8 @@ class PaymentScreenState extends State<PaymentScreen> {
       requestCardPinBottomSheet();
     } else {
       // if form is invalid
-      authController.showSweetToast(message: "Invalid card details", isSuccess: false);
+      authController.showSweetToast(
+          message: "Invalid card details", isSuccess: false);
     }
   }
 
@@ -223,16 +219,15 @@ class PaymentScreenState extends State<PaymentScreen> {
     });
   }
 
-
-
-    // show foody bottom sheet
-void requestCardPinBottomSheet() {
+  // show foody bottom sheet
+  void requestCardPinBottomSheet() {
     showModalBottomSheet(
-      context: context, 
+      context: context,
       isScrollControlled: true,
       builder: (context) => Container(
-        padding: const EdgeInsets.only(left: 30, right: 15, top: 40, bottom: 40),
-        height: MediaQuery.of(context).size.height*0.4,
+        padding:
+            const EdgeInsets.only(left: 30, right: 15, top: 40, bottom: 40),
+        height: MediaQuery.of(context).size.height * 0.4,
         width: double.infinity,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -246,49 +241,45 @@ void requestCardPinBottomSheet() {
             children: [
               // Card Pin
               TextFieldWidget(
-                text: 'Input Card Pin', 
+                text: 'Input Card Pin',
                 hintText: 'XXXX',
                 keyboardType: TextInputType.number,
                 inputController: cardPinController,
-              ),    
-              const SizedBox(height: 20),          
-              
+              ),
+              const SizedBox(height: 20),
+
               const SizedBox(height: 20),
               // Checkout
               FoodyMainButton(
-                text: 'Pay Now', 
-                onTapped: (){
+                text: 'Pay Now',
+                onTapped: () {
                   var pin = cardPinController.text.trim();
-                  var expMonth = expiryDate.substring(0,2);
-                  var expYear = expiryDate.substring(3,5);
-                  var newCardNumber = cardNumber.removeAllWhitespace; // removing all whitespaces
+                  var expMonth = expiryDate.substring(0, 2);
+                  var expYear = expiryDate.substring(3, 5);
+                  var newCardNumber = cardNumber
+                      .removeAllWhitespace; // removing all whitespaces
 
-                  if(kDebugMode)print("$expMonth , $expYear ($expiryDate)");
+                  if (kDebugMode) print("$expMonth , $expYear ($expiryDate)");
 
-                  if(pin.length==4 && pin.isNotEmpty){
+                  if (pin.length == 4 && pin.isNotEmpty) {
                     // calling our function from Payment controller
                     paymentController.createPaymentReference(
-                      orderID: widget.orderID, 
-                      cardNumber: newCardNumber, 
-                      CVV: cvvCode, 
-                      expMonth: expMonth, 
-                      expYear: expYear, 
-                      atmPin: pin
-                    );
+                        orderID: widget.orderID,
+                        cardNumber: newCardNumber,
+                        CVV: cvvCode,
+                        expMonth: expMonth,
+                        expYear: expYear,
+                        atmPin: pin);
                   }
                 },
                 backgroundColor: FoodyColors.mainColor,
                 fontSize: 15,
                 textColor: Colors.white,
-              ),              
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
 }
-
-
-

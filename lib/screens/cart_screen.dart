@@ -4,11 +4,8 @@ import 'package:foody/constants/foody_colors.dart';
 import 'package:foody/constants/foody_images.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_endpoints.dart';
 import 'package:foody/models/create_order_model.dart';
 import 'package:foody/screens/main_pages/category_detail_screen.dart';
-import 'package:foody/screens/payments/payment_screen.dart';
-import 'package:foody/screens/payments/paystack_payment_screen.dart';
 import 'package:foody/widgets/cart_item_widget.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/option_dialog.dart';
@@ -58,6 +55,17 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (productController.allOrdersList.isNotEmpty) {
+      var data = productController.allOrderedProductsList.first;
+
+      emailController.text = data.email;
+      firstNameController.text = data.firstName;
+      lastNameController.text = data.lastName;
+      addressController.text = data.address;
+      cityController.text = data.city;
+      stateController.text = data.state;
+      postalCodeController.text = data.postalCode;
+    }
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(15),
@@ -172,14 +180,6 @@ class _CartScreenState extends State<CartScreen> {
                                   Get.back();
                                   //Show bottom sheet
                                   showFoodyBottomSheet();
-                                  // productController.makePaystackPayment(
-                                  //     'ca345ebf-2bfd-4f1d-8643-6d3aeaf6b7ba');
-                                  // productController.validatePaystackPayment(
-                                  //     orderID:
-                                  //         'ca345ebf-2bfd-4f1d-8643-6d3aeaf6b7ba',
-                                  //     ref: 'tdidgjugm8');
-                                  // productController.getDetailsOfAnOrder(
-                                  //     'ca345ebf-2bfd-4f1d-8643-6d3aeaf6b7ba');
                                 });
                           },
                           style: ElevatedButton.styleFrom(
@@ -209,91 +209,91 @@ class _CartScreenState extends State<CartScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => Container(
-        padding:
-            const EdgeInsets.only(left: 30, right: 15, top: 40, bottom: 40),
-        height: MediaQuery.of(context).size.height * 0.7,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(22),
-            topRight: Radius.circular(22),
+      builder: (context) => StatefulBuilder(builder: (context, setState) {
+        return Container(
+          padding:
+              const EdgeInsets.only(left: 30, right: 15, top: 40, bottom: 40),
+          height: MediaQuery.of(context).size.height * 0.7,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(22),
+              topRight: Radius.circular(22),
+            ),
+            color: Colors.white,
           ),
-          color: Colors.white,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // First name
-              TextFieldWidget(
-                text: 'first name',
-                hintText: 'your first name here',
-                keyboardType: TextInputType.text,
-                inputController: firstNameController,
-              ),
-              const SizedBox(height: 20),
-              // First name
-              TextFieldWidget(
-                text: 'last name',
-                hintText: 'your last name here',
-                keyboardType: TextInputType.text,
-                inputController: lastNameController,
-              ),
-              const SizedBox(height: 20),
-              // Email Section
-              TextFieldWidget(
-                text: 'email',
-                hintText: 'yourmail@mail.com',
-                keyboardType: TextInputType.emailAddress,
-                inputController: emailController,
-              ),
-              const SizedBox(height: 20),
-              // Address
-              TextFieldWidget(
-                text: 'address',
-                hintText: 'your address',
-                keyboardType: TextInputType.text,
-                inputController: addressController,
-              ),
-              const SizedBox(height: 20),
-              // Postal Code
-              TextFieldWidget(
-                text: 'postal code',
-                hintText: 'your postal code',
-                keyboardType: TextInputType.number,
-                inputController: postalCodeController,
-              ),
-              const SizedBox(height: 20),
-              // City
-              TextFieldWidget(
-                text: 'city',
-                hintText: 'your current city',
-                keyboardType: TextInputType.text,
-                inputController: cityController,
-              ),
-              const SizedBox(height: 20),
-              // State
-              TextFieldWidget(
-                text: 'state',
-                hintText: 'your state',
-                keyboardType: TextInputType.text,
-                inputController: stateController,
-              ),
-              const SizedBox(height: 20),
-              // phone number
-              TextFieldWidget(
-                text: 'phone number',
-                hintText: 'your phone number',
-                keyboardType: TextInputType.phone,
-                isDoneTypeing: true,
-                inputController: phoneNumberController,
-              ),
-              const SizedBox(height: 30),
-              // The request Bike Check box
-              StatefulBuilder(builder: (context, setState) {
-                return CheckboxListTile(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // First name
+                TextFieldWidget(
+                  text: 'first name',
+                  hintText: 'your first name here',
+                  keyboardType: TextInputType.text,
+                  inputController: firstNameController,
+                ),
+                const SizedBox(height: 20),
+                // First name
+                TextFieldWidget(
+                  text: 'last name',
+                  hintText: 'your last name here',
+                  keyboardType: TextInputType.text,
+                  inputController: lastNameController,
+                ),
+                const SizedBox(height: 20),
+                // Email Section
+                TextFieldWidget(
+                  text: 'email',
+                  hintText: 'yourmail@mail.com',
+                  keyboardType: TextInputType.emailAddress,
+                  inputController: emailController,
+                ),
+                const SizedBox(height: 20),
+                // Address
+                TextFieldWidget(
+                  text: 'address',
+                  hintText: 'your address',
+                  keyboardType: TextInputType.text,
+                  inputController: addressController,
+                ),
+                const SizedBox(height: 20),
+                // Postal Code
+                TextFieldWidget(
+                  text: 'postal code',
+                  hintText: 'your postal code',
+                  keyboardType: TextInputType.number,
+                  inputController: postalCodeController,
+                ),
+                const SizedBox(height: 20),
+                // City
+                TextFieldWidget(
+                  text: 'city',
+                  hintText: 'your current city',
+                  keyboardType: TextInputType.text,
+                  inputController: cityController,
+                ),
+                const SizedBox(height: 20),
+                // State
+                TextFieldWidget(
+                  text: 'state',
+                  hintText: 'your state',
+                  keyboardType: TextInputType.text,
+                  inputController: stateController,
+                ),
+                const SizedBox(height: 20),
+                // phone number
+                TextFieldWidget(
+                  text: 'phone number',
+                  hintText: 'your phone number',
+                  keyboardType: TextInputType.phone,
+                  isDoneTypeing: true,
+                  inputController: phoneNumberController,
+                ),
+                const SizedBox(height: 30),
+                // The request Bike Check box
+                CheckboxListTile(
                   title: const Text(
-                    "Request for Bike",
+                    "Request for Home Delivery",
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                     ),
@@ -306,181 +306,183 @@ class _CartScreenState extends State<CartScreen> {
                   },
                   controlAffinity:
                       ListTileControlAffinity.leading, //  <-- leading Checkbox
-                );
-              }),
-              const SizedBox(height: 20),
-              // Pay With Flutterwave
-              FoodyMainButton(
-                text: 'Pay With PayStack',
-                onTapped: () {
-                  var fName = firstNameController.text.trim();
-                  var lName = lastNameController.text.trim();
-                  var email = emailController.text.trim();
-                  var address = addressController.text.trim();
-                  var city = cityController.text.trim();
-                  var postalCode = postalCodeController.text.trim();
-                  var state = stateController.text.trim();
-                  var phone = phoneNumberController.text.trim();
+                ),
+                const SizedBox(height: 20),
+                // Pay With Flutterwave
+                FoodyMainButton(
+                  text: 'Pay With PayStack',
+                  onTapped: () {
+                    var fName = firstNameController.text.trim();
+                    var lName = lastNameController.text.trim();
+                    var email = emailController.text.trim();
+                    var address = addressController.text.trim();
+                    var city = cityController.text.trim();
+                    var postalCode = postalCodeController.text.trim();
+                    var state = stateController.text.trim();
+                    var phone = phoneNumberController.text.trim();
 
-                  if (fName.isEmpty ||
-                      lName.isEmpty ||
-                      email.isEmpty ||
-                      address.isEmpty ||
-                      city.isEmpty ||
-                      postalCode.isEmpty ||
-                      state.isEmpty ||
-                      phone.isEmpty) {
-                    authController.showSweetToast(
+                    if (fName.isEmpty ||
+                        lName.isEmpty ||
+                        email.isEmpty ||
+                        address.isEmpty ||
+                        city.isEmpty ||
+                        postalCode.isEmpty ||
+                        state.isEmpty ||
+                        phone.isEmpty) {
+                      authController.showSweetToast(
+                          message:
+                              "Wrong or empty fields. Kindly fill it properly and try again",
+                          isSuccess: false);
+                    } else {
+                      List<CartModel> cartList = [];
+
+                      for (var co in productController.cartProductsList) {
+                        // instance of cartModel
+                        var cartModel = CartModel(
+                            productId: co.product.id.toString(),
+                            quantity: co.quantity,
+                            price: co.price);
+                        // adding each cartModel obj created to the li
+                        cartList.add(cartModel);
+                      }
+
+                      List<Map<String, dynamic>> cartModelReborn = [];
+                      for (var n in cartList) {
+                        cartModelReborn.add({
+                          "product_id": n.productId.toString(),
+                          "quantity": n.quantity,
+                          "price": n.price,
+                        });
+                      }
+
+                      if (cartList.isEmpty) {
+                        authController.showSweetToast(
+                            message: "Error: No item in the cart",
+                            isSuccess: false);
+                      } else {
+                        // an instance of Create Order Model
+                        final cOderModel = CreateOrderModel(
+                            cart: cartModelReborn,
+                            firstName: fName,
+                            lastName: lName,
+                            email: email,
+                            address: address,
+                            postalCode: postalCode,
+                            city: city,
+                            state: state,
+                            phoneNumber: phone);
+
+                        if (kDebugMode) {
+                          print("ORDER OBJECT CREATED - PayStack: $cOderModel");
+                        }
+
+                        // calling our method
+                        productController.makeAnOrder(
+                          createOrderModel: cOderModel,
+                          isFlutterWave: false,
+                          isHomeDelPicked: requestForBike,
+                        );
+                      }
+                    }
+                  },
+                  backgroundColor: Colors.blueAccent,
+                  fontSize: 11.5.sp,
+                  textColor: Colors.white,
+                ),
+                SizedBox(height: 5.h),
+                // Pay With Flutterwave
+                FoodyMainButton(
+                  text: 'Pay With Flutterwave',
+                  onTapped: () {
+                    var fName = firstNameController.text.trim();
+                    var lName = lastNameController.text.trim();
+                    var email = emailController.text.trim();
+                    var address = addressController.text.trim();
+                    var city = cityController.text.trim();
+                    var postalCode = postalCodeController.text.trim();
+                    var state = stateController.text.trim();
+                    var phone = phoneNumberController.text.trim();
+
+                    if (fName.isEmpty ||
+                        lName.isEmpty ||
+                        email.isEmpty ||
+                        address.isEmpty ||
+                        city.isEmpty ||
+                        postalCode.isEmpty ||
+                        state.isEmpty ||
+                        phone.isEmpty) {
+                      authController.showSweetToast(
                         message:
                             "Wrong or empty fields. Kindly fill it properly and try agaain",
-                        isSuccess: false);
-                  } else {
-                    List<CartModel> cartList = [];
+                        isSuccess: false,
+                      );
+                    } else if (3 > 4) {
+                      List<CartModel> cartList = [];
 
-                    for (var co in productController.cartProductsList) {
-                      // instance of cartModel
-                      var cartModel = CartModel(
-                          productId: co.product.id.toString(),
-                          quantity: co.quantity,
-                          price: co.price);
-                      // adding each cartModel obj created to the li
-                      cartList.add(cartModel);
-                    }
-
-                    List<Map<String, dynamic>> cartModelReborn = [];
-                    for (var n in cartList) {
-                      cartModelReborn.add({
-                        "product_id": n.productId.toString(),
-                        "quantity": n.quantity,
-                        "price": n.price,
-                      });
-                    }
-
-                    if (cartList.isEmpty) {
-                      authController.showSweetToast(
-                          message: "Error: No item in the cart",
-                          isSuccess: false);
-                    } else {
-                      // an instance of Create Order Model
-                      final cOderModel = CreateOrderModel(
-                          cart: cartModelReborn,
-                          firstName: fName,
-                          lastName: lName,
-                          email: email,
-                          address: address,
-                          postalCode: postalCode,
-                          city: city,
-                          state: state,
-                          phoneNumber: phone);
-
-                      if (kDebugMode) {
-                        print("ORDER OBJECT CREATED - PayStack: $cOderModel");
+                      for (var co in productController.cartProductsList) {
+                        // instance of cartModel
+                        var cartModel = CartModel(
+                            productId: co.product.id.toString(),
+                            quantity: co.quantity,
+                            price: co.price);
+                        // adding each cartModel obj created to the li
+                        cartList.add(cartModel);
                       }
 
-                      // calling our method
-                      productController.makeAnOrder(
-                        createOrderModel: cOderModel,
-                        isFlutterWave: false,
-                      );
-                    }
-                  }
-                },
-                backgroundColor: Colors.blueAccent,
-                fontSize: 11.5.sp,
-                textColor: Colors.white,
-              ),
-              SizedBox(height: 5.h),
-              // Pay With Flutterwave
-              FoodyMainButton(
-                text: 'Pay With Flutterwave',
-                onTapped: () {
-                  var fName = firstNameController.text.trim();
-                  var lName = lastNameController.text.trim();
-                  var email = emailController.text.trim();
-                  var address = addressController.text.trim();
-                  var city = cityController.text.trim();
-                  var postalCode = postalCodeController.text.trim();
-                  var state = stateController.text.trim();
-                  var phone = phoneNumberController.text.trim();
-
-                  if (fName.isEmpty ||
-                      lName.isEmpty ||
-                      email.isEmpty ||
-                      address.isEmpty ||
-                      city.isEmpty ||
-                      postalCode.isEmpty ||
-                      state.isEmpty ||
-                      phone.isEmpty) {
-                    authController.showSweetToast(
-                      message:
-                          "Wrong or empty fields. Kindly fill it properly and try agaain",
-                      isSuccess: false,
-                    );
-                  } else if (3 > 4) {
-                    List<CartModel> cartList = [];
-
-                    for (var co in productController.cartProductsList) {
-                      // instance of cartModel
-                      var cartModel = CartModel(
-                          productId: co.product.id.toString(),
-                          quantity: co.quantity,
-                          price: co.price);
-                      // adding each cartModel obj created to the li
-                      cartList.add(cartModel);
-                    }
-
-                    List<Map<String, dynamic>> cartModelReborn = [];
-                    for (var n in cartList) {
-                      cartModelReborn.add({
-                        "product_id": n.productId.toString(),
-                        "quantity": n.quantity,
-                        "price": n.price,
-                      });
-                    }
-
-                    if (cartList.isEmpty) {
-                      authController.showSweetToast(
-                          message: "Error: No item in the cart",
-                          isSuccess: false);
-                    } else {
-                      // an instance of Create Order Model
-                      final cOderModel = CreateOrderModel(
-                          cart: cartModelReborn,
-                          firstName: fName,
-                          lastName: lName,
-                          email: email,
-                          address: address,
-                          postalCode: postalCode,
-                          city: city,
-                          state: state,
-                          phoneNumber: phone);
-
-                      if (kDebugMode) {
-                        print(
-                            "ORDER OBJECT CREATED - FlutterWave: $cOderModel");
+                      List<Map<String, dynamic>> cartModelReborn = [];
+                      for (var n in cartList) {
+                        cartModelReborn.add({
+                          "product_id": n.productId.toString(),
+                          "quantity": n.quantity,
+                          "price": n.price,
+                        });
                       }
 
-                      // calling our method
-                      productController.makeAnOrder(
-                        createOrderModel: cOderModel,
-                        isFlutterWave: true,
+                      if (cartList.isEmpty) {
+                        authController.showSweetToast(
+                            message: "Error: No item in the cart",
+                            isSuccess: false);
+                      } else {
+                        // an instance of Create Order Model
+                        final cOderModel = CreateOrderModel(
+                            cart: cartModelReborn,
+                            firstName: fName,
+                            lastName: lName,
+                            email: email,
+                            address: address,
+                            postalCode: postalCode,
+                            city: city,
+                            state: state,
+                            phoneNumber: phone);
+
+                        if (kDebugMode) {
+                          print(
+                              "ORDER OBJECT CREATED - FlutterWave: $cOderModel");
+                        }
+
+                        // calling our method
+                        productController.makeAnOrder(
+                          createOrderModel: cOderModel,
+                          isFlutterWave: true,
+                          isHomeDelPicked: requestForBike,
+                        );
+                      }
+                    } else {
+                      authController.showSweetToast(
+                        message: "This payment option is no longer available",
+                        isSuccess: false,
                       );
                     }
-                  } else {
-                    authController.showSweetToast(
-                      message: "This payment option is no longer available",
-                      isSuccess: false,
-                    );
-                  }
-                },
-                backgroundColor: Colors.redAccent,
-                fontSize: 11.5.sp,
-                textColor: Colors.white,
-              ),
-            ],
+                  },
+                  backgroundColor: Colors.redAccent,
+                  fontSize: 11.5.sp,
+                  textColor: Colors.white,
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -272,6 +272,14 @@ class AuthController extends GetxController {
     return false;
   }
 
+  // Checking for Strong Password
+  bool validateUserPassword(String value) {
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    RegExp regExp = RegExp(pattern);
+    return regExp.hasMatch(value);
+  }
+
   // This function start password reset: sends otp
   Future<void> sendResetPswdOTP(String email) async {
     // progress dialog

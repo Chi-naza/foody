@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/controllers/auth_controller.dart';
 import 'package:foody/screens/main_pages/home_screen.dart';
+import 'package:foody/screens/order_bike_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
 import 'package:foody/widgets/option_dialog.dart';
 import 'package:get/get.dart';
@@ -9,11 +10,18 @@ import 'package:sizer/sizer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaystackPaymentScreen extends StatefulWidget {
+  final String orderID;
   final String ref;
   final String subPaymentUrl;
+  final bool isHomeDeliveryPicked;
 
-  const PaystackPaymentScreen(
-      {super.key, required this.subPaymentUrl, required this.ref});
+  const PaystackPaymentScreen({
+    super.key,
+    required this.subPaymentUrl,
+    required this.ref,
+    required this.isHomeDeliveryPicked,
+    required this.orderID,
+  });
 
   @override
   State<PaystackPaymentScreen> createState() => _PaystackPaymentScreenState();
@@ -79,7 +87,7 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
                 ? const Icon(Icons.check, color: Colors.white)
                 : IconButton(
                     icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-                    onPressed: () => Get.offAll(HomeScreen.routeName),
+                    onPressed: () => Get.offAllNamed(HomeScreen.routeName),
                   );
           }),
           backgroundColor: Colors.green[400],
@@ -99,7 +107,7 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
         ),
         bottomNavigationBar: StreamBuilder(
           stream: () async* {
-            bool paymentVerified = false;
+            // bool paymentVerified = false;
 
             // This while loop continues to run the verification API until the users payment is confirmed, then it will stop
             //  Then, user will be able to proceed to home
@@ -121,9 +129,8 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
           }(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (kDebugMode)
-                print(
-                    "THIS IS THE STATUS from SNAPshot: ${(snapshot.data as Map)['status']}");
+              debugPrint(
+                  "THIS IS THE STATUS from SNAPshot: ${(snapshot.data as Map)['status']}");
               return BottomAppBar(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +145,7 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
                               : 'Processing . . .',
                           onTapped: (snapshot.data as Map)['status']
                               ? () {
-                                  print('SUccessFUL');
+                                  debugPrint('SUccessFUL');
                                 }
                               : () {},
                         ),
@@ -159,7 +166,12 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
                           title: 'Done with Payment?',
                           message: 'Continue shopping',
                           okOnPressed: () {
-                            Get.offAllNamed(HomeScreen.routeName);
+                            if (widget.isHomeDeliveryPicked) {
+                              Get.offAll(OrderBikeScreen(
+                                  prodDescription: widget.orderID));
+                            } else {
+                              Get.offAllNamed(HomeScreen.routeName);
+                            }
                           });
                     }),
               );
