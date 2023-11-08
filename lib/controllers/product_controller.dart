@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:foody/constants/cart_helper_methods.dart';
 import 'package:foody/controllers/auth_controller.dart';
@@ -7,6 +9,8 @@ import 'package:foody/locals/local_data.dart';
 import 'package:foody/models/create_order_model.dart';
 import 'package:foody/models/order_model.dart';
 import 'package:foody/models/product_model.dart';
+import 'package:foody/screens/main_pages/home_screen.dart';
+import 'package:foody/screens/order_bike_screen.dart';
 import 'package:foody/screens/payments/payment_screen.dart';
 import 'package:foody/screens/payments/paystack_payment_screen.dart';
 import 'package:foody/widgets/progress_dialog.dart';
@@ -329,6 +333,7 @@ class ProductController extends GetxController {
       final url = response.body['data']['payment_response']['data']
           ['authorization_url'];
       if (kDebugMode) print("REF: $reference");
+      if (kDebugMode) print("ORDER ID: $orderID");
       if (kDebugMode) print("URL: $url");
 
       // Go to payment screen
@@ -348,7 +353,9 @@ class ProductController extends GetxController {
 
   // Validate Paystack Payment
   Future<void> validatePaystackPayment(
-      {required String orderID, required String ref}) async {
+      {required String orderID,
+      required String ref,
+      required bool isHomeDeliveryPicked}) async {
     // Getting the products
     Response response = await HelperAPIMethods.getDataWithHeader(
         FoodyAPI.BASE_URL +
@@ -356,12 +363,26 @@ class ProductController extends GetxController {
 
     if (response.statusCode == 200) {
       if (kDebugMode) print("PAYSTACK VALIDATION: ${response.body}");
+      // show success message
+      authController.showSweetToast(
+          message: "Payment Successful", isSuccess: true);
+      // ccontinuing with bike order if it is picked
+      if (isHomeDeliveryPicked) {
+        Get.offAll(OrderBikeScreen(prodDescription: orderID));
+      } else {
+        Get.offAllNamed(HomeScreen.routeName);
+      }
     } else {
       if (kDebugMode) {
         print("FAILED TO VALIDATE PAYSTACK PAYMENT . . .${response.body}");
+        authController.showSweetToast(
+            message: "Not Paid Yet", isSuccess: false);
       }
     }
   }
+
+  //  REF: tfnit35dc7
+  // ORDER ID: 8a4f687b-f14b-497f-badf-1f0a05c0fc35
 
   // Validate Paystack Payment
   Future<void> getDetailsOfAnOrder(String orderID) async {

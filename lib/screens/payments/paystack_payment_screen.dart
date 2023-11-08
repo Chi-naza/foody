@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:foody/controllers/auth_controller.dart';
+import 'package:foody/controllers/product_controller.dart';
 import 'package:foody/screens/main_pages/home_screen.dart';
-import 'package:foody/screens/order_bike_screen.dart';
 import 'package:foody/widgets/foody_main_button.dart';
-import 'package:foody/widgets/option_dialog.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -40,6 +39,8 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
   // check if condition is verified;
   final isPaymentVerified = false.obs;
 
+  var productController = Get.find<ProductController>();
+
   @override
   void initState() {
     // Initializing the webview controller
@@ -60,7 +61,14 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
             );
           },
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://www.youtube.com/')) {
+            if (request.url.startsWith('https://api.onicsstore.com/')) {
+              // https://api.onicsstore.com  // Testing: http://localhost:3000/
+              if (kDebugMode) print("PREVENTED NAVIGATION");
+              productController.validatePaystackPayment(
+                orderID: widget.orderID,
+                ref: widget.ref,
+                isHomeDeliveryPicked: widget.isHomeDeliveryPicked,
+              );
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -86,13 +94,13 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
             return isPaymentVerified.value
                 ? const Icon(Icons.check, color: Colors.white)
                 : IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                    icon: const Icon(Icons.home, color: Colors.white),
                     onPressed: () => Get.offAllNamed(HomeScreen.routeName),
                   );
           }),
           backgroundColor: Colors.green[400],
           elevation: 0,
-          title: Text(
+          title: const Text(
             'Pay for your orders',
             style: TextStyle(
               fontWeight: FontWeight.w600,
@@ -161,18 +169,12 @@ class _PaystackPaymentScreenState extends State<PaystackPaymentScreen> {
                 child: FoodyMainButton(
                     text: 'Done', //'Click to Verify Payment',
                     fontSize: 13.5.sp,
-                    onTapped: () {
-                      showChoiceDialog(
-                          title: 'Done with Payment?',
-                          message: 'Continue shopping',
-                          okOnPressed: () {
-                            if (widget.isHomeDeliveryPicked) {
-                              Get.offAll(OrderBikeScreen(
-                                  prodDescription: widget.orderID));
-                            } else {
-                              Get.offAllNamed(HomeScreen.routeName);
-                            }
-                          });
+                    onTapped: () async {
+                      await productController.validatePaystackPayment(
+                        orderID: widget.orderID,
+                        ref: widget.ref,
+                        isHomeDeliveryPicked: widget.isHomeDeliveryPicked,
+                      );
                     }),
               );
               // return Container();

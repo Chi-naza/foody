@@ -212,8 +212,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     // calling registration function if form is valid
                     if (emailValid && pswdValid) {
-                      // authController.registerUser(email, pswd);
-                      print('Yes');
+                      authController.registerUser(email, pswd);
+                      // print('Yes');
                     }
                   }),
               SizedBox(height: 20),

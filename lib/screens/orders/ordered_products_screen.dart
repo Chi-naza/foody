@@ -81,8 +81,7 @@ class _OrderedProductsScreenState extends State<OrderedProductsScreen> {
                                 quantity: orderedItem.quantity,
                                 totalPrice: productController.formatToMoney(
                                     orderedItem.price.toString()),
-                                image: FoodyAPI.BASE_URL +
-                                    orderedItem.product.image,
+                                image: orderedItem.product.image,
                                 orderedAt: date,
                               ),
                             );
