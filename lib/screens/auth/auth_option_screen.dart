@@ -35,37 +35,36 @@ class _AuthOptionsScreenState extends State<AuthOptionsScreen> {
               SizedBox(height: 10.h),
               // Login Button
               FoodyMainButton(
-                text: 'Login', 
-                width: 90.w,
-                textColor: Colors.white,
-                backgroundColor: FoodyColors.mainColor,
-                onTapped: (){
-                  Get.toNamed(LoginScreen.routeName);
-                }
-              ),
+                  text: 'Login',
+                  width: 90.w,
+                  textColor: Colors.white,
+                  backgroundColor: FoodyColors.mainColor,
+                  onTapped: () {
+                    Get.toNamed(LoginScreen.routeName);
+                  }),
               SizedBox(height: 30),
               // Register Outline Button
               InkWell(
-                onTap: (){
+                onTap: () {
                   Get.toNamed(RegistrationScreen.routeName);
                 },
                 child: Container(
-                  width:  90.w,
-                  height:  7.h,
-                  decoration:  BoxDecoration (
-                    border:  Border.all(color: Color(0xff4bad73)),
-                    borderRadius:  BorderRadius.circular(10),
+                  width: 90.w,
+                  height: 7.h,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xff4bad73)),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Center(
                       child: Text(
                         'Register',
-                        textAlign:  TextAlign.center,
-                        style:  GoogleFonts.inter(
-                          fontSize:  17.sp,
-                          fontWeight:  FontWeight.w600,
-                          height:  1.2125,
-                          color:  FoodyColors.mainColor3,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 17.sp,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2125,
+                          color: FoodyColors.mainColor3,
                         ),
                       ),
                     ),
@@ -117,7 +116,7 @@ class _AuthOptionsScreenState extends State<AuthOptionsScreen> {
               //   ),
               // ),
               // const SizedBox(height: 30),
-              // // Sign In With Google 
+              // // Sign In With Google
               // InkWell(
               //   onTap: (){
               //     print('Signed In To Google: Successful');

@@ -13,21 +13,19 @@ const Color accentDarkGreenColor = Color(0xFF115C49);
 const Color accentYellowColor = Color(0xFFFFB612);
 const Color accentOrangeColor = Color(0xFFEA7A3B);
 
-
-
 class PaymentVerificationScreen extends StatefulWidget {
   final String orderID;
   final String flwRef;
 
-  const PaymentVerificationScreen({super.key, required this.orderID, required this.flwRef});
-  
+  const PaymentVerificationScreen(
+      {super.key, required this.orderID, required this.flwRef});
+
   @override
-  _PaymentVerificationScreenState createState() => _PaymentVerificationScreenState();
+  _PaymentVerificationScreenState createState() =>
+      _PaymentVerificationScreenState();
 }
 
 class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
-
-
   String otpCode = "";
 
   final paymentController = Get.find<PaymentController>();
@@ -65,7 +63,7 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
               borderWidth: 4.0,
               onCodeChanged: (String code) {},
               onSubmit: (String verificationCode) {
-                 setState(() {
+                setState(() {
                   otpCode = verificationCode;
                   print(otpCode);
                 });
@@ -89,36 +87,31 @@ class _PaymentVerificationScreenState extends State<PaymentVerificationScreen> {
               ),
             ),
             Spacer(flex: 3),
-             // Checkout
+            // Checkout
             Align(
               alignment: Alignment.center,
               child: FoodyMainButton(
-                text: 'Complete Payment', 
-                onTapped: (){
-                  if(otpCode.length == 6 && otpCode.isNotEmpty){
-                    paymentController.validateUsersPayment(orderID: widget.orderID, flwRef: widget.flwRef, otp: otpCode);
-                  }else{
-                    authController.showSweetToast(message: "Invalid otp code", isSuccess: false);
+                text: 'Complete Payment',
+                onTapped: () {
+                  if (otpCode.length == 6 && otpCode.isNotEmpty) {
+                    paymentController.validateUsersPayment(
+                        orderID: widget.orderID,
+                        flwRef: widget.flwRef,
+                        otp: otpCode);
+                  } else {
+                    authController.showSweetToast(
+                        message: "Invalid otp code", isSuccess: false);
                   }
                 },
                 backgroundColor: FoodyColors.mainColor,
                 fontSize: 15,
                 textColor: Colors.white,
               ),
-            ),     
+            ),
             Spacer(flex: 2),
           ],
         ),
       ),
     );
   }
-
 }
-
-
-
-
-
-
-
-

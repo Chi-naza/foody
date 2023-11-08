@@ -9,15 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 class ProfileScreen extends StatefulWidget {
-
   const ProfileScreen({super.key});
 
   @override
   ProfileScreenState createState() => ProfileScreenState();
 }
 
-class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
-
+class ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
   // changing the status of the TextFields
   bool _status = true;
 
@@ -30,14 +29,11 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
   // Variables of User Data
   String? userEmail;
 
-
-
   @override
   void initState() {
     fetchUserData();
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -46,44 +42,42 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
     super.dispose();
   }
 
-
   // Fetching user's Data
   Future<String> fetchUserData() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     userEmail = await sp.getString(FoodyLocals.EMAIL);
-    setState(() { });
-    if(kDebugMode) print("USER: $userEmail");
+    setState(() {});
+    if (kDebugMode) print("USER: $userEmail");
     return userEmail!;
-  } 
-
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body:  Container(
+        body: Container(
       color: Colors.white,
-      child:  ListView(
+      child: ListView(
         children: <Widget>[
           Column(
             children: <Widget>[
-               Container(
+              Container(
                 height: 250.0,
                 color: Colors.white,
-                child:  Column(
+                child: Column(
                   children: <Widget>[
                     Padding(
                         padding: EdgeInsets.only(left: 5.0.w, top: 2.0.h),
-                        child:  Row(
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                             Icon(
+                            Icon(
                               Icons.arrow_back_ios,
                               color: Colors.black,
                               size: 17.0.sp,
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 6.0.w),
-                              child:  Text(
+                              child: Text(
                                 'PROFILE',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -94,8 +88,8 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 27.w),
-                              child:  InkWell(
-                                onTap: (){
+                              child: InkWell(
+                                onTap: () {
                                   // A function that logs out the user
                                   authController.logoutUser();
                                 },
@@ -113,19 +107,20 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                         )),
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
-                      child:  Stack(fit: StackFit.loose, children: <Widget>[
-                         Row(
+                      child: Stack(fit: StackFit.loose, children: <Widget>[
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                             Container(
+                            Container(
                                 width: 140.0,
                                 height: 140.0,
-                                decoration:  BoxDecoration(
+                                decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  image:  DecorationImage(
-                                    image:  ExactAssetImage(
-                                      FoodyImages.profileAvatar, // Profile Image is Here
+                                  image: DecorationImage(
+                                    image: ExactAssetImage(
+                                      FoodyImages
+                                          .profileAvatar, // Profile Image is Here
                                     ),
                                     fit: BoxFit.cover,
                                   ),
@@ -134,14 +129,14 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                         ),
                         Padding(
                             padding: EdgeInsets.only(top: 90.0, right: 100.0),
-                            child:  Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                 CircleAvatar(
+                                CircleAvatar(
                                   backgroundColor: FoodyColors.mainColor3,
                                   radius: 25.0,
-                                  child:  Icon(
-                                    Icons.camera_alt,  // Change picture
+                                  child: Icon(
+                                    Icons.camera_alt, // Change picture
                                     color: Colors.white,
                                   ),
                                 )
@@ -152,26 +147,26 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                   ],
                 ),
               ),
-               Container(
+              Container(
                 color: Color(0xffFFFFFF),
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 25.0),
-                  child:  Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 25.0),
-                          child:  Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                               Column(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                   Text(
+                                  Text(
                                     'Personal Information',
                                     style: TextStyle(
                                         fontSize: 16.0.sp,
@@ -179,7 +174,7 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                                   ),
                                 ],
                               ),
-                               Column(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
@@ -192,14 +187,14 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                       Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 25.0),
-                          child:  Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                               Column(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                   Text(
+                                  Text(
                                     'Name',
                                     style: TextStyle(
                                         fontSize: 13.sp,
@@ -212,17 +207,16 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                       Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 2.0),
-                          child:  Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                               Flexible(
-                                child:  TextField(
+                              Flexible(
+                                child: TextField(
                                   decoration: const InputDecoration(
                                     hintText: "Enter Your Name",
                                   ),
                                   enabled: !_status,
                                   autofocus: !_status,
-
                                 ),
                               ),
                             ],
@@ -230,14 +224,14 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                       Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 25.0),
-                          child:  Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                               Column(
+                              Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
-                                   Text(
+                                  Text(
                                     'Email ID',
                                     style: TextStyle(
                                         fontSize: 13.0.sp,
@@ -250,14 +244,13 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                       Padding(
                           padding: EdgeInsets.only(
                               left: 25.0, right: 25.0, top: 2.0),
-                          child:  Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
-                               Flexible(
-                                child:  TextField(
+                              Flexible(
+                                child: TextField(
                                   decoration: InputDecoration(
-                                    hintText: userEmail ?? "Enter Email ID"
-                                  ),
+                                      hintText: userEmail ?? "Enter Email ID"),
                                   enabled: !_status,
                                 ),
                               ),
@@ -357,7 +350,7 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
                       //         ),
                       //       ],
                       //     )),
-                      !_status ? _getActionButtons() :  Container(),
+                      !_status ? _getActionButtons() : Container(),
                     ],
                   ),
                 ),
@@ -368,7 +361,6 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
       ),
     ));
   }
-
 
   Widget _getActionButtons() {
     return Padding(
@@ -382,20 +374,20 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
               child: ElevatedButton(
-                child:  Text("Save"),
+                child: Text("Save"),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.green,
-                //   shape: RoundedRectangleBorder(
-                // borderRadius: BorderRadius.circular(20.0)
-                // ),
+                  //   shape: RoundedRectangleBorder(
+                  // borderRadius: BorderRadius.circular(20.0)
+                  // ),
                 ),
                 onPressed: () {
                   setState(() {
                     _status = true;
-                    FocusScope.of(context).requestFocus( FocusNode());
+                    FocusScope.of(context).requestFocus(FocusNode());
                   });
-                },                
+                },
               ),
             ),
           ),
@@ -404,16 +396,15 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             child: Padding(
               padding: EdgeInsets.only(left: 10.0),
               child: Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _status = true;
-                      FocusScope.of(context).requestFocus( FocusNode());
-                    });
-                  },
-                  child: Text('Cancel'),
-                )                 
-              ), 
+                  child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _status = true;
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  });
+                },
+                child: Text('Cancel'),
+              )),
             ),
           ),
         ],

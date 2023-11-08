@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foody/bindings/custom_app_bindings.dart';
 import 'package:foody/routes/app_routes.dart';
-import 'package:foody/screens/auth/reset_confirm_pswd.dart';
-import 'package:foody/screens/auth/reset_pswd_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
+// import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   CustomAppBinding().dependencies();
   runApp(const MyApp());
+  // initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

@@ -89,4 +89,8 @@ class FoodyAPI {
   static String validatePaystackPaymentEndpoint(String orderID, String ref) {
     return "/payment/validate-paystack/$orderID/$ref";
   }
+
+  // CHAT
+  static String sendMessageChatEndpoint = "/contact/user/"; //POST
+  static String getChatMessagesEndpoint = "/contact/user/"; //GET
 }

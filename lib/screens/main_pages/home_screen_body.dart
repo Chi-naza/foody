@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:foody/constants/foody_images.dart';
-import 'package:foody/controllers/delivery_controller.dart';
+import 'package:foody/controllers/chat_controller.dart';
 import 'package:foody/controllers/product_controller.dart';
-import 'package:foody/data/api/api_endpoints.dart';
+
 import 'package:foody/models/product_model.dart';
+import 'package:foody/screens/chat/chat_screen.dart';
 import 'package:foody/screens/main_pages/category_list_screen.dart';
 import 'package:foody/screens/orders/ordered_products_screen.dart';
 import 'package:foody/widgets/header_background.dart';
@@ -41,6 +42,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
 
   var availableCategories = <FullCategoryModel>[].obs;
 
+  var chatController = Get.put(ChatController());
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +53,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
     });
     productController.fetchAllGroceryProducts();
     runSearchFilter('');
+    // injecting chat controller
+    Get.put(ChatController());
   }
 
   void runSearchFilter(String enteredKeyword) {
@@ -139,11 +144,15 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   // Cart Icon
                   IconButton(
                     icon: const Icon(
-                      Icons.notifications_none,
+                      Icons.message_outlined,
                       color: Colors.white,
                       size: 28,
                     ),
                     onPressed: () {
+                      // chatController.fetchChatMessages();
+                      Get.to(const ChatBodyScreen());
+                      // chatController.sendMessageToAdmin(
+                      //     "I am an admin, and I can here you well");
                       // DeliveryController deliveryController =
                       //     Get.put(DeliveryController());
                       // deliveryController.orderBike(

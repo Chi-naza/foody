@@ -19,7 +19,7 @@ class OnboardingScreen extends StatelessWidget {
         child: HeaderBackgroundWidget(
           children: Column(
             children: [
-               // IMAGES
+              // IMAGES
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -47,11 +47,11 @@ class OnboardingScreen extends StatelessWidget {
               SizedBox(height: 6.h),
               // Get Started Button
               FoodyMainButton(
-                text: 'Get Started', 
-                onTapped: (){
+                text: 'Get Started',
+                onTapped: () {
                   Get.offNamed(AuthOptionsScreen.routeName);
                 },
-              ),                  
+              ),
             ],
           ),
         ),

@@ -45,6 +45,7 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   sizer: ^2.0.15
   webview_flutter: ^4.0.6
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   flutter_test:

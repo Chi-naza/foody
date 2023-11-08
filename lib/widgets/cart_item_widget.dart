@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 class CartItemWidget extends StatelessWidget {
-
   final String productName;
   final int quantity;
   final String totalPrice;
@@ -15,17 +14,16 @@ class CartItemWidget extends StatelessWidget {
   final String? orderedProductsID;
   final String? orderedAt;
 
-  CartItemWidget({
-    super.key, 
-    required this.productName, 
-    required this.quantity, 
-    required this.totalPrice, 
-    required this.image, 
-    required this.productIndex, 
-    this.isOrderedProducts=false, 
-    this.orderedProductsID, 
-    this.orderedAt
-  });
+  CartItemWidget(
+      {super.key,
+      required this.productName,
+      required this.quantity,
+      required this.totalPrice,
+      required this.image,
+      required this.productIndex,
+      this.isOrderedProducts = false,
+      this.orderedProductsID,
+      this.orderedAt});
 
   final productController = Get.find<ProductController>();
 
@@ -44,7 +42,7 @@ class CartItemWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(10),
-             ),
+            ),
           ),
           const Spacer(flex: 1),
           SizedBox(
@@ -53,11 +51,12 @@ class CartItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  productName.substring(0,1).toUpperCase() + productName.substring(1), //cartItem.product.name,
-                  style: TextStyle(color: Colors.red, fontWeight: FontWeight.w800)
-                ),
+                    productName.substring(0, 1).toUpperCase() +
+                        productName.substring(1), //cartItem.product.name,
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w800)),
                 const Spacer(flex: 1),
-                if(isOrderedProducts)
+                if (isOrderedProducts)
                   Container(
                     height: 20,
                     width: 200,
@@ -68,7 +67,7 @@ class CartItemWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: FoodyColors.textFoodyblack,
                         fontSize: 10.sp,
-                      ),                        
+                      ),
                     ),
                   ),
                 const Spacer(flex: 1),
@@ -76,20 +75,20 @@ class CartItemWidget extends StatelessWidget {
                   width: 130,
                   height: 30,
                   child: Row(
-                    children: [                     
+                    children: [
                       Text(
                         "Quantity :",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: FoodyColors.textFoodyblack,
                           fontSize: 12.sp,
-                        ),                        
+                        ),
                       ),
                       SizedBox(width: 7),
                       Text(
                         "$quantity".padLeft(2, "0"),
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold, 
+                          fontWeight: FontWeight.bold,
                           color: FoodyColors.mainColor,
                         ),
                       ),
@@ -107,27 +106,27 @@ class CartItemWidget extends StatelessWidget {
                 onTap: () {
                   // remove cart item callback
                   productController.removeProductFromCart(productIndex);
-                },  
+                },
                 child: Icon(
-                  isOrderedProducts? Icons.done_outline :Icons.cancel,
-                  color: isOrderedProducts? Colors.green : null,
+                  isOrderedProducts ? Icons.done_outline : Icons.cancel,
+                  color: isOrderedProducts ? Colors.green : null,
                 ),
               ),
               const Spacer(flex: 1),
-              if(isOrderedProducts)
+              if (isOrderedProducts)
                 Container(
-                    // height: 20,
-                    // width: 200,
-                    child: Text(
-                      orderedAt??"",  //"Sat, 23rd 1999",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: FoodyColors.textFoodyblack,
-                        fontSize: 12,
-                      ),                        
+                  // height: 20,
+                  // width: 200,
+                  child: Text(
+                    orderedAt ?? "", //"Sat, 23rd 1999",
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: FoodyColors.textFoodyblack,
+                      fontSize: 12,
                     ),
                   ),
+                ),
               const Spacer(flex: 1),
               Text(
                 "# $totalPrice",
@@ -142,4 +141,3 @@ class CartItemWidget extends StatelessWidget {
     );
   }
 }
-
